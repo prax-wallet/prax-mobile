@@ -1,0 +1,17 @@
+{
+  "platforms": [
+    "apple",
+    "android",
+    "web"
+  ],
+  "apple": {
+    "modules": [
+      "PenumbraSdkModule"
+    ]
+  },
+  "android": {
+    "modules": [
+      "expo.modules.penumbrasdkmodule.PenumbraSdkModule"
+    ]
+  }
+}
