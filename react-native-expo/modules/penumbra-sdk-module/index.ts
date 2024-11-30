@@ -12,4 +12,28 @@ export function invokeRust(): Promise<string> {
   return PenumbraSdkModule.invokeRust();
 }
 
+export function performAsyncTask(input: string): Promise<string> {
+  return PenumbraSdkModule.performAsyncTask(input);
+}
+
+export function requestBlockHeight(): Promise<number> {
+  return PenumbraSdkModule.requestBlockHeight();
+}
+
+export function startServer(): Promise<boolean> {
+  return PenumbraSdkModule.startServer();
+}
+
+export function sayAfter(ms: number, who: string): Promise<string> {
+  return PenumbraSdkModule.sayAfter(ms, who);
+}
+
+export function startCounter(): Promise<boolean> {
+  return PenumbraSdkModule.startCounter();
+}
+
+export function getCounter(): Promise<number> {
+  return PenumbraSdkModule.getCounter();
+}
+
 export { ChangeEventPayload };
