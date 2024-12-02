@@ -9,7 +9,7 @@ use std::sync::Arc;
 use tokio::task;
 use tokio::{runtime::Runtime, sync::Mutex, time::Duration};
 use warp::Filter;
-
+use penumbra_view::ViewServer;
 uniffi::setup_scaffolding!();
 
 // Shared state for the counter
@@ -65,3 +65,64 @@ pub async fn say_after(ms: u64, who: String) -> String {
         .unwrap_err();
     format!("Hello, {who}!")
 }
+
+const ENDPOINT: &str = "https://testnet.plinfra.net";
+
+pub async fn start_test_view_server() -> Result<ViewServer> {
+    ViewServer::load_or_initialize(
+        None::<&str>,
+        None::<&str>,
+        &penumbra_keys::test_keys::FULL_VIEWING_KEY,
+        ENDPOINT.parse().unwrap(),
+    )
+    .await
+}
+
+#[uniffi::export(async_runtime = "tokio")]
+pub async fn start_server() -> Option<u64> {
+    tracing::info!("Starting servers...");
+
+    // Start the test view server and handle any errors upfront.
+    let vs = match start_test_view_server().await {
+        Ok(vs) => vs,
+        Err(e) => {
+            eprintln!("Error starting view server: {}", e);
+            return None;
+        }
+    };
+
+    // Get the block height before spawning tasks.
+    let block_height = match vs.latest_known_block_height().await {
+        Ok(height) => {
+            println!("Block height: {}", height.0);
+            height.0
+        }
+        Err(e) => {
+            eprintln!("Error querying block height: {}", e);
+            return None;
+        }
+    };
+
+    // Spawn the Tonic server in the background.
+    tokio::spawn(async move {
+        let vs_tonic = ViewServiceServer::new(vs);
+        let server = tonic::transport::Server::builder()
+            .accept_http1(true)
+            .add_service(tonic_web::enable(vs_tonic))
+            .serve("127.0.0.1:3333".parse().unwrap());
+
+        if let Err(e) = server.await {
+            eprintln!("Error running tonic server: {}", e);
+        }
+    });
+
+    // Spawn the Warp server in the background.
+    tokio::spawn(async {
+        let routes = warp::path!("hello" / String).map(|name| format!("Hello, {}!", name));
+        warp::serve(routes).run(([127, 0, 0, 1], 3030)).await;
+    });
+
+    println!("Servers started successfully");
+    Some(block_height)
+}
+
