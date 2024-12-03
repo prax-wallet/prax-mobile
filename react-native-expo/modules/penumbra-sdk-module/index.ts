@@ -20,7 +20,7 @@ export function requestBlockHeight(): Promise<number> {
   return PenumbraSdkModule.requestBlockHeight();
 }
 
-export function startServer(): Promise<boolean> {
+export function startServer(): Promise<number> {
   return PenumbraSdkModule.startServer();
 }
 
