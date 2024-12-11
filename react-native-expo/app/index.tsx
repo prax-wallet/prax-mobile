@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { invokeRust, sayAfter, performAsyncTask, startCounter, getCounter, startServer } from '@/modules/penumbra-sdk-module';
+import { startServer } from '@/modules/penumbra-sdk-module';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
 export default function App() {
   const [counter, setCounter] = useState(0); 
 
   useEffect(() => {
-    startCounter();
-
     const interval = setInterval(async () => {
       const value = await startServer(); 
       setCounter(value);
