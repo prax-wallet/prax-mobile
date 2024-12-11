@@ -1,7 +1,7 @@
 import { requireNativeViewManager } from 'expo-modules-core';
 import * as React from 'react';
 
-import { PenumbraSdkModuleViewProps } from './PenumbraSdkModule.types.ts';
+import { PenumbraSdkModuleViewProps } from './PenumbraSdkModule.types';
 
 const NativeView: React.ComponentType<PenumbraSdkModuleViewProps> =
   requireNativeViewManager('PenumbraSdkModule');

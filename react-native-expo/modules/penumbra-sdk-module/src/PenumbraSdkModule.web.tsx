@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { PenumbraSdkModuleViewProps } from './PenumbraSdkModule.types.ts.ts';
+import { PenumbraSdkModuleViewProps } from './PenumbraSdkModule.types';
 
 export default function PenumbraSdkModuleView(props: PenumbraSdkModuleViewProps) {
   return (
