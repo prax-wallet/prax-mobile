@@ -35,5 +35,6 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+/ios/
 app-example
-ios/
+modules/penumbra-sdk-module/ios/Mobile.xcframework/**/*.a
