@@ -1,17 +1,17 @@
 # penumbra-mobile
 
-## Uniffi 
+## Uniffi
 
 1. Generate swift bindings
 
    ```bash
-   make build 
+   cd uniffi && make build
    ```
 
 2. Copy bindings to react-native application
 
    ```bash
-   make copy 
+   make copy
    ```
 
 ## React Native Application
@@ -21,13 +21,13 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 1. Install dependencies
 
    ```bash
-   yarn
+   cd react-native-expo && yarn
    ```
 
 2. Start the app
 
    ```bash
-   npx expo run:ios 
+   npx expo run:ios
    ```
 
 In the output, you'll find options to open the app in a
@@ -38,3 +38,9 @@ In the output, you'll find options to open the app in a
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+## Dependencies
+
+- XCode Developer Tools
+- iOS Simulator
+- [CocoaPods](https://cocoapods.org/) (v1.16+)
