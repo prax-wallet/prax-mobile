@@ -9,7 +9,7 @@ build:
 	cargo build
 	cargo run --bin uniffi-bindgen generate --library ./target/debug/libmobile.dylib --language swift --out-dir ./bindings
 	@echo "Building for iOS targets..."
-	for target in aarch64-apple-darwin aarch64-apple-ios-sim; do \
+	for target in aarch64-apple-darwin aarch64-apple-ios aarch64-apple-ios-sim; do \
 		rustup target add $$target; \
 		cargo build --release --target=$$target; \
 	done
