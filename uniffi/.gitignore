@@ -1,3 +1,4 @@
 target/
 ios/*
 bindings/*
+.DS_Store
