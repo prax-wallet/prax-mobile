@@ -1,31 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { createAppStateContainer, getBlockHeight, startServer } from '@/modules/penumbra-sdk-module';
+import AppInitializationContext from '@/contexts/AppInitializationContext';
+import { getBlockHeight } from '@/modules/penumbra-sdk-module';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
 export default function App() {
   const [counter, setCounter] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Handle initialization
-  useEffect(() => {
-    const initializeApp = async () => {
-      try {
-        await createAppStateContainer();
-        await startServer();
-        setIsLoading(false);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to initialize');
-        setIsLoading(false);
-      }
-    };
-
-    initializeApp();
-  }, []);
+  const appInitialization = useContext(AppInitializationContext);
 
   // Handle block height polling
   useEffect(() => {
-    if (isLoading) return;
+    if (appInitialization.isLoading) return;
 
     const interval = setInterval(async () => {
       try {
@@ -37,12 +22,12 @@ export default function App() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [isLoading]);
+  }, [appInitialization.isLoading]);
 
-  if (isLoading) {
+  if (appInitialization.isLoading) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size='large' color='#0000ff' />
         <Text style={styles.text}>Initializing...</Text>
       </View>
     );
