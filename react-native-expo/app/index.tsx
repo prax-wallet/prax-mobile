@@ -3,7 +3,7 @@ import { getBlockHeight } from '@/modules/penumbra-sdk-module';
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
-export default function App() {
+export default function AppRoute() {
   const [counter, setCounter] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const appInitialization = useContext(AppInitializationContext);
