@@ -1,15 +1,11 @@
 import { makeTheme } from 'dripsy';
 import { theme } from './theme';
 
+const BREAKPOINTS: (keyof typeof theme.breakpoint)[] = ['mobile', 'tablet', 'desktop', 'lg', 'xl'];
+
 const dripsyTheme = makeTheme({
   ...theme,
-  breakpoints: [
-    `${theme.breakpoint.mobile}px`,
-    `${theme.breakpoint.tablet}px`,
-    `${theme.breakpoint.desktop}px`,
-    `${theme.breakpoint.lg}px`,
-    `${theme.breakpoint.xl}px`,
-  ],
+  breakpoints: BREAKPOINTS.map(breakpoint => `${theme.breakpoint[breakpoint]}px`),
 });
 export default dripsyTheme;
 type DripsyTheme = typeof dripsyTheme;
