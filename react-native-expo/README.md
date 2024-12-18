@@ -4,9 +4,9 @@
 
 The `react-native-expo` directory is aliased as `@` in `tsconfig.json`. When an import would require traversing more than one parent directory, use the `@` alias instead:
 
-- `import Button from '../system/components/Button'` ✅
-- `import Button from '../../system/components/Button'` ❌
-- `import Button from '@/system/components/Button'` ✅
+- `import Button from '../components/Button'` ✅
+- `import Button from '../../components/Button'` ❌
+- `import Button from '@/components/Button'` ✅
 
 Note: this only works in TypeScript (`.ts`/`.tsx`) files.
 
