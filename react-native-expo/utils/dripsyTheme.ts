@@ -64,6 +64,184 @@ const dripsyTheme = makeTheme({
     otherDialogBackground: theme.color.other.dialogBackground,
     otherOverlay: theme.color.other.overlay,
   },
+
+  customFonts: {
+    Poppins: {
+      default: 'Poppins',
+      italic: 'PoppinsItalic',
+      bold: 'PoppinsMedium',
+      boldItalic: 'PoppinsMediumItalic',
+    },
+    IosevkaTerm: {
+      default: 'IosevkaTerm',
+      bold: 'IosevkaTermMedium',
+    },
+  },
+
+  fonts: {
+    root: 'Poppins',
+    mono: 'IosevkaTerm',
+    heading: 'WorkSans',
+  },
+
+  // These need to be redefined inside React Native, since RN uses numeric font
+  // sizes (rather than, e.g., `rem`s).
+  fontSize: {
+    text9xl: 128,
+    text8xl: 96,
+    text7xl: 72,
+    text6xl: 60,
+    text5xl: 48,
+    text4xl: 36,
+    text3xl: 30,
+    text2xl: 24,
+    textXl: 20,
+    textLg: 18,
+    textBase: 16,
+    textSm: 14,
+    textXs: 12,
+    textXxs: 11,
+  },
+
+  // These need to be redefined inside React Native, since RN uses numeric line
+  // heights (rather than, e.g., `rem`s).
+  lineHeight: {
+    text9xl: 132,
+    text8xl: 100,
+    text7xl: 80,
+    text6xl: 68,
+    text5xl: 56,
+    text4xl: 44,
+    text3xl: 40,
+    text2xl: 36,
+    textXl: 32,
+    textLg: 28,
+    textBase: 24,
+    textSm: 20,
+    textXs: 16,
+    textXxs: 16,
+  },
+
+  text: {
+    h1: {
+      fontFamily: 'heading',
+      fontSize: 'text6xl',
+      fontWeight: 500,
+      lineHeight: 'text6xl',
+    },
+
+    h2: {
+      fontFamily: 'heading',
+      fontSize: 'text5xl',
+      fontWeight: 500,
+      lineHeight: 'text5xl',
+    },
+
+    h3: {
+      fontFamily: 'heading',
+      fontSize: 'text4xl',
+      fontWeight: 500,
+      lineHeight: 'text4xl',
+    },
+
+    h4: {
+      fontFamily: 'heading',
+      fontSize: 'text3xl',
+      fontWeight: 500,
+      lineHeight: 'text3xl',
+    },
+
+    large: {
+      fontFamily: 'root',
+      fontSize: 'textLg',
+      fontWeight: 500,
+      lineHeight: 'textLg',
+    },
+
+    body: {
+      fontFamily: 'root',
+      fontSize: 'textBase',
+      fontWeight: 400,
+      lineHeight: 'textBase',
+    },
+
+    strong: {
+      fontFamily: 'root',
+      fontSize: 'textBase',
+      fontWeight: 500,
+      lineHeight: 'textBase',
+    },
+
+    detail: {
+      fontFamily: 'root',
+      fontSize: 'textXs',
+      fontWeight: 500,
+      lineHeight: 'textXs',
+    },
+
+    detailTechnical: {
+      fontFamily: 'mono',
+      fontSize: 'textXs',
+      fontWeight: 400,
+      lineHeight: 'textXs',
+    },
+
+    small: {
+      fontFamily: 'root',
+      fontSize: 'textSm',
+      fontWeight: 400,
+      lineHeight: 'textSm',
+    },
+
+    tab: {
+      fontFamily: 'root',
+      fontSize: 'textLg',
+      fontWeight: 400,
+      lineHeight: 'textLg',
+    },
+
+    tabSmall: {
+      fontFamily: 'root',
+      fontSize: 'textSm',
+      fontWeight: 500,
+      lineHeight: 'textSm',
+    },
+
+    tableItem: {
+      fontFamily: 'root',
+      fontSize: 'textBase',
+      fontWeight: 400,
+      lineHeight: 'textBase',
+    },
+
+    tableHeading: {
+      fontFamily: 'root',
+      fontSize: 'textBase',
+      fontWeight: 500,
+      lineHeight: 'textBase',
+    },
+
+    technical: {
+      fontFamily: 'mono',
+      fontSize: 'textBase',
+      fontWeight: 500,
+      lineHeight: 'textBase',
+    },
+
+    xxl: {
+      fontFamily: 'root',
+      fontSize: 'text2xl',
+      fontWeight: 500,
+      lineHeight: 'text2xl',
+    },
+
+    button: {
+      fontFamily: 'root',
+      fontSize: 'textBase',
+      fontWeight: 500,
+      lineHeight: 'textBase',
+    },
+  },
 });
 
 export default dripsyTheme;
