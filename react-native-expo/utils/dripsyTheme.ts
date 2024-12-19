@@ -9,7 +9,7 @@ const dripsyTheme = makeTheme({
   /**
    * @todo - Someone smarter than me, please map this dynamically, while
    * preserving type safety. (Note that not all color groups have the same
-   * sub-keys of `main`/`light`/`dark`/`contrast`.)
+   * `main`/`light`/`dark`/`contrast` sub-keys.)
    */
   colors: {
     neutralMain: theme.color.neutral.main,
