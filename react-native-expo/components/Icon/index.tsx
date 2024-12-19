@@ -1,5 +1,5 @@
 import { DripsyTheme } from '@/utils/dripsyTheme';
-import { useDripsyTheme } from 'dripsy';
+import { useSx } from 'dripsy';
 import { LucideIcon } from 'lucide-react-native';
 import { ComponentProps, FC } from 'react';
 
@@ -21,11 +21,7 @@ export interface IconProps {
    * - `lg`: 32px square
    */
   size: IconSize;
-  /**
-   * A function that takes the theme's `color` object and returns the hex color
-   * to render: `color={color => color.success.main}`
-   */
-  color?: (themeColors: DripsyTheme['color']) => string;
+  color?: keyof DripsyTheme['colors'];
 }
 
 const PROPS_BY_SIZE: Record<IconSize, ComponentProps<LucideIcon>> = {
@@ -58,13 +54,8 @@ const PROPS_BY_SIZE: Record<IconSize, ComponentProps<LucideIcon>> = {
  * ```
  */
 export default function Icon({ IconComponent, size = 'sm', color }: IconProps) {
-  const { theme } = useDripsyTheme();
+  const sx = useSx();
+  color = color ? sx({ color }).color : 'currentColor';
 
-  return (
-    <IconComponent
-      absoluteStrokeWidth
-      color={!color ? 'currentColor' : color(theme.color)}
-      {...PROPS_BY_SIZE[size]}
-    />
-  );
+  return <IconComponent absoluteStrokeWidth color={color} {...PROPS_BY_SIZE[size]} />;
 }
