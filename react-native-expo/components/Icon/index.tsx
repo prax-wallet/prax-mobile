@@ -10,7 +10,7 @@ export interface IconProps {
    * The icon import from `lucide-react` to render.
    *
    * ```tsx
-   * import { ChevronRight } from 'lucide-react';
+   * import { ChevronRight } from 'lucide-react-native';
    * <Icon IconComponent={ChevronRight} />
    * ```
    */
@@ -21,7 +21,10 @@ export interface IconProps {
    * - `lg`: 32px square
    */
   size: IconSize;
-  /** A string representing the color key from the Tailwind theme (e.g. 'primary.light') */
+  /**
+   * A function that takes the theme's `color` object and returns the hex color
+   * to render: `color={color => color.success.main}`
+   */
   color?: (themeColors: DripsyTheme['color']) => string;
 }
 
@@ -50,7 +53,7 @@ const PROPS_BY_SIZE: Record<IconSize, ComponentProps<LucideIcon>> = {
  * <Icon
  *   IconComponent={ArrowRightLeft}
  *   size='sm'
- *   color='text.primary'
+ *   color={color => color.success.main}
  * />
  * ```
  */
