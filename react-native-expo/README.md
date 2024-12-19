@@ -137,3 +137,11 @@ In short: all UI lives under the `components` directory. All route components li
 ### Components
 
 Components MUST be named in UpperCamelCase: e.g., `DropdownMenu`.
+
+## Storybook
+
+We use [Storybook](https://storybook.js.org/) to develop and view UI components in isolation. While Storybook does provide React Native integration (via a separate app entry point), we instead use Storybook for web due to ease of use. This allow developers to view Storybook stories in their browser, while still developing the app in the iOS Simulator.
+
+To make this possible, we use [`react-native-web`](https://necolas.github.io/react-native-web/) (as well as some other utility libraries) to convert React Native components into their HTML equivalents. See `.storybook/main.ts` for more.
+
+Storybook stories should be placed next to the component file they represent, suffixed with `.stories.ts` or `.stories.tsx`. For example, the Storybook stories for a `Button` component would live under `Button/index.stories.ts`.

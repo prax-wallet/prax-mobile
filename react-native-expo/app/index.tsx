@@ -1,5 +1,7 @@
+import Icon from '@/components/Icon';
 import AppInitializationContext from '@/contexts/AppInitializationContext';
 import { getBlockHeight } from '@/modules/penumbra-sdk-module';
+import { CheckCircle } from 'lucide-react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
@@ -43,7 +45,9 @@ export default function AppRoute() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>view server block height: {counter}</Text>
+      <Text style={styles.text}>
+        <Icon IconComponent={CheckCircle} size='md' /> view server block height: {counter}
+      </Text>
     </View>
   );
 }

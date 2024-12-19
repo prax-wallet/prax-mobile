@@ -8,7 +8,7 @@ const dripsyTheme = makeTheme({
   breakpoints: BREAKPOINTS.map(breakpoint => `${theme.breakpoint[breakpoint]}px`),
 });
 export default dripsyTheme;
-type DripsyTheme = typeof dripsyTheme;
+export type DripsyTheme = typeof dripsyTheme;
 
 declare module 'dripsy' {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
