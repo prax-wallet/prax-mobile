@@ -4,11 +4,11 @@ import dripsyTheme from '@/utils/dripsyTheme';
 import { Stack } from 'expo-router';
 import useInitializeApp from './useInitializeApp';
 import FontProvider from './FontProvider';
-import NavBar from '../NavBar';
+import Header from '../Header';
 
 const STACK_SCREEN_OPTIONS = {
   contentStyle: { backgroundColor: 'white' },
-  header: () => <NavBar />,
+  header: () => <Header />,
 };
 
 export default function RootLayout() {

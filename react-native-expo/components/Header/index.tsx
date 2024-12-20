@@ -2,7 +2,7 @@ import { Image, Sx, View, SafeAreaView } from 'dripsy';
 import logo from './logo.png';
 import Avatar from '../Avatar';
 
-export default function NavBar() {
+export default function Header() {
   return (
     <SafeAreaView>
       <View sx={sx.root}>
