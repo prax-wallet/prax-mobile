@@ -28,7 +28,7 @@ const config: StorybookConfig = {
       resolve: {
         alias: {
           // Match the tsconfig.json alias
-          '@': path.resolve(__dirname, '../src'),
+          '@': path.resolve(__dirname, '..'),
 
           // Tells Storybook to use react-native-web anytime there's an import
           // from react-native

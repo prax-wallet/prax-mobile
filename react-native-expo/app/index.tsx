@@ -2,8 +2,9 @@ import Icon from '@/components/Icon';
 import AppInitializationContext from '@/contexts/AppInitializationContext';
 import { getBlockHeight } from '@/modules/penumbra-sdk-module';
 import { CheckCircle } from 'lucide-react-native';
-import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { useContext, useEffect, useState } from 'react';
+import { StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text } from 'dripsy';
 
 export default function AppRoute() {
   const [counter, setCounter] = useState(0);
@@ -30,7 +31,7 @@ export default function AppRoute() {
     return (
       <View style={styles.container}>
         <ActivityIndicator size='large' color='#0000ff' />
-        <Text style={styles.text}>Initializing...</Text>
+        <Text>Initializing...</Text>
       </View>
     );
   }
@@ -45,7 +46,7 @@ export default function AppRoute() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
+      <Text>
         <Icon IconComponent={CheckCircle} size='md' /> view server block height: {counter}
       </Text>
     </View>
@@ -58,11 +59,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f8f8f8',
-  },
-  text: {
-    fontSize: 18,
-    color: '#333',
-    fontWeight: 'bold',
   },
   errorText: {
     fontSize: 18,
