@@ -1,12 +1,12 @@
 /**
- * A pseudo-component, specifically for the case of creating a Storybook story
- * to demonstrate text variants.
+ * This Storybook story is specifically created to demonstrate text variants.
+ * Its component is the built-in `<Text />` component from Dripsy, so there is
+ * no component file separate from this story file.
  */
 import { Meta, StoryObj } from '@storybook/react/*';
 import dripsyTheme from '@/utils/dripsyTheme';
 import { Text } from 'dripsy';
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   component: Text,
   tags: ['autodocs'],
