@@ -21,6 +21,9 @@ export interface IconProps {
    * - `lg`: 32px square
    */
   size: IconSize;
+  /**
+   * The name of the color in the Dripsy theme -- e.g., `secondaryContrast`.
+   */
   color?: keyof DripsyTheme['colors'];
 }
 
@@ -49,7 +52,7 @@ const PROPS_BY_SIZE: Record<IconSize, ComponentProps<LucideIcon>> = {
  * <Icon
  *   IconComponent={ArrowRightLeft}
  *   size='sm'
- *   color={color => color.success.main}
+ *   color='secondaryContrast'
  * />
  * ```
  */
