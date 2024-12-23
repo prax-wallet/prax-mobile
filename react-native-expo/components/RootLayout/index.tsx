@@ -4,11 +4,10 @@ import dripsyTheme from '@/utils/dripsyTheme';
 import { Stack } from 'expo-router';
 import useInitializeApp from './useInitializeApp';
 import FontProvider from './FontProvider';
-import Header from '../Header';
 
 const STACK_SCREEN_OPTIONS = {
   contentStyle: { backgroundColor: 'white' },
-  header: () => <Header />,
+  header: () => null,
 };
 
 export default function RootLayout() {
@@ -18,7 +17,9 @@ export default function RootLayout() {
     <FontProvider>
       <DripsyProvider theme={dripsyTheme}>
         <AppInitializationContext.Provider value={appInitialization}>
-          <Stack screenOptions={STACK_SCREEN_OPTIONS} />
+          <Stack screenOptions={STACK_SCREEN_OPTIONS}>
+            <Stack.Screen name='(tabs)' />
+          </Stack>
         </AppInitializationContext.Provider>
       </DripsyProvider>
     </FontProvider>

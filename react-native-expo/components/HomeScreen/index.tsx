@@ -1,11 +1,7 @@
-import { Text, View } from 'dripsy';
+import { Text } from 'dripsy';
 
 export interface HomeScreenProps {}
 
 export default function HomeScreen() {
-  return (
-    <View>
-      <Text>Hello, world!</Text>
-    </View>
-  );
+  return <Text>HomeRoute</Text>;
 }

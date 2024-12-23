@@ -1,5 +1,5 @@
 import HomeScreen from '@/components/HomeScreen';
 
-export default function AppRoute() {
+export default function HomeRoute() {
   return <HomeScreen />;
 }
