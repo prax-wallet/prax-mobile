@@ -1,6 +1,7 @@
 import { ActionType } from '@/types/ActionType';
 import { Pressable, Sx, Text } from 'dripsy';
 import { ReactNode } from 'react';
+import { GestureResponderEvent } from 'react-native';
 
 export interface ButtonProps {
   /**
@@ -17,12 +18,18 @@ export interface ButtonProps {
    * Default: `default`
    */
   actionType?: ActionType;
+  onPress?: ((event: GestureResponderEvent) => void) | null;
 }
 
-export default function Button({ children, actionType = 'default' }: ButtonProps) {
+export default function Button({ children, onPress, actionType = 'default' }: ButtonProps) {
   return (
-    <Pressable sx={{ ...sx.root, ...(actionType === 'accent' ? sx.accent : sx.default) }}>
-      <Text sx={actionType === 'accent' ? sx.textAccent : sx.textDefault}>{children}</Text>
+    <Pressable
+      sx={{ ...sx.root, ...(actionType === 'accent' ? sx.accent : sx.default) }}
+      onPress={onPress}
+    >
+      <Text variant='button' sx={actionType === 'accent' ? sx.textAccent : sx.textDefault}>
+        {children}
+      </Text>
     </Pressable>
   );
 }
@@ -31,10 +38,13 @@ const sx = {
   root: {
     borderRadius: 24,
     height: 48,
+    flexGrow: 1,
 
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+
+    px: '$8',
   },
 
   accent: {
