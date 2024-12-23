@@ -45,7 +45,7 @@ const TABS_SCREEN_OPTIONS = ({ route }: { route: RouteProp<ParamListBase, string
     },
     // @ts-expect-error - Types are wrong for `title`
     title: ({ focused }) => (
-      <Text sx={{ color: focused ? 'neutralDark' : 'neutralLight' }}>
+      <Text sx={{ color: focused ? 'neutralDark' : 'neutralLight' }} variant='small'>
         {ROUTES[route.name].title}
       </Text>
     ),
