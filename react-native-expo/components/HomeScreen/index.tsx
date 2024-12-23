@@ -1,4 +1,5 @@
 import { Sx, Text, View } from 'dripsy';
+import Button from '../Button';
 
 export interface HomeScreenProps {}
 
@@ -10,7 +11,10 @@ export default function HomeScreen() {
         <Text sx={sx.balance}>0.00 USDC</Text>
       </View>
 
-      <View sx={sx.buttons}></View>
+      <View sx={sx.buttons}>
+        <Button actionType='accent'>Deposit</Button>
+        <Button>Request</Button>
+      </View>
     </View>
   );
 }
@@ -29,16 +33,20 @@ const sx = {
   balanceWrapper: {
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
   },
 
   buttons: {
     flexDirection: 'row',
+    flexGrow: 0,
+    gap: '$2',
+    px: '$4',
+    pb: '$4',
   },
 
   root: {
     flexGrow: 1,
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-around',
   },
 } satisfies Record<string, Sx>;
