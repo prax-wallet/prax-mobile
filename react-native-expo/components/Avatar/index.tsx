@@ -24,5 +24,6 @@ const sx = {
 
   text: {
     color: 'neutralDark',
+    textTransform: 'uppercase',
   },
 } satisfies Record<string, Sx>;
