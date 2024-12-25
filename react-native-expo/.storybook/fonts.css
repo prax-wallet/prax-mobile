@@ -1,0 +1,34 @@
+@font-face {
+  font-family: Poppins;
+  src: url(../assets/fonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+  font-family: Poppins;
+  font-style: italic;
+  src: url(../assets/fonts/Poppins-Italic.ttf);
+}
+
+@font-face {
+  font-family: Poppins;
+  font-weight: bold;
+  src: url(../assets/fonts/Poppins-Medium.ttf);
+}
+
+@font-face {
+  font-family: Poppins;
+  font-weight: bold;
+  font-style: italic;
+  src: url(../assets/fonts/Poppins-MediumItalic.ttf);
+}
+
+@font-face {
+  font-family: IosevkaTerm;
+  src: url(../assets/fonts/IosevkaTerm-Regular.ttf);
+}
+
+@font-face {
+  font-family: IosevkaTerm;
+  font-weight: bold;
+  src: url(../assets/fonts/IosevkaTerm-Medium.ttf);
+}
