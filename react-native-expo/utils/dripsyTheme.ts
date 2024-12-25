@@ -81,7 +81,7 @@ const dripsyTheme = makeTheme({
   fonts: {
     root: 'Poppins',
     mono: 'IosevkaTerm',
-    heading: 'WorkSans',
+    heading: 'Poppins',
   },
 
   // These need to be redefined inside React Native, since RN uses numeric font
