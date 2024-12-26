@@ -122,6 +122,8 @@ const dripsyTheme = makeTheme({
     textXxs: 16,
   },
 
+  radii: theme.borderRadius,
+
   sizes: {
     $0: 0,
     $1: 4,
