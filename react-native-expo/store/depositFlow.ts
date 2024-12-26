@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export interface ActionSheetState {
+export interface DepositFlowState {
   isOpen: boolean;
 }
 
-const initialState: ActionSheetState = {
+const initialState: DepositFlowState = {
   isOpen: false,
 };
 
-export const actionSheetSlice = createSlice({
-  name: 'actionSheet',
+export const depositFlowSlice = createSlice({
+  name: 'depositFlow',
   initialState,
   reducers: {
     open: state => {
@@ -21,6 +21,6 @@ export const actionSheetSlice = createSlice({
   },
 });
 
-export const { open, close } = actionSheetSlice.actions;
+export const { open, close } = depositFlowSlice.actions;
 
-export default actionSheetSlice.reducer;
+export default depositFlowSlice.reducer;

@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import actionSheet from './actionSheet';
+import depositFlow from './depositFlow';
 
 const store = configureStore({
   reducer: {
-    actionSheet,
+    depositFlow,
   },
 });
 
