@@ -6,21 +6,24 @@ import { Pressable, Sx, Text, View } from 'dripsy';
 import { setStep } from '@/store/depositFlow';
 import { useAppDispatch } from '@/store/hooks';
 import { useState } from 'react';
+import { Trans, useLingui } from '@lingui/react/macro';
 
 const MOCK_PENUMBRA_ADDRESS =
   'penumbra147mfall0zr6am5r45qkwht7xqqrdsp50czde7empv7yq2nk3z8yyfh9k9520ddgswkmzar22vhz9dwtuem7uxw0qytfpv7lk3q9dp8ccaw2fn5c838rfackazmgf3ahh09cxmz';
 
-const BUTTON_PROPS_DEFAULT = {
-  children: 'Copy IBC address',
-  disabled: false,
-};
-
-const BUTTON_PROPS_COPIED = {
-  children: 'Copied!',
-  disabled: true,
-};
-
 export default function Address() {
+  const { t } = useLingui();
+
+  const BUTTON_PROPS_DEFAULT = {
+    children: t`Copy IBC address`,
+    disabled: false,
+  };
+
+  const BUTTON_PROPS_COPIED = {
+    children: t`Copied!`,
+    disabled: true,
+  };
+
   const [buttonProps, setButtonProps] = useState(BUTTON_PROPS_DEFAULT);
   const dispatch = useAppDispatch();
 
@@ -33,9 +36,14 @@ export default function Address() {
 
   return (
     <View sx={sx.root}>
-      <Text variant='large'>Shielded IBC deposit</Text>
+      <Text variant='large'>
+        <Trans>Shielded IBC deposit</Trans>
+      </Text>
+
       <Text variant='small'>
-        This address rotates for each deposit to ensure privacy in Penumbra's shielded pool.
+        <Trans>
+          This address rotates for each deposit to ensure privacy in Penumbra's shielded pool.
+        </Trans>
       </Text>
 
       <View sx={sx.addressWrapper}>
@@ -43,7 +51,10 @@ export default function Address() {
       </View>
 
       <Pressable sx={sx.helpButton} onPress={() => dispatch(setStep('help'))}>
-        <Text variant='small'>What is a shielded IBC deposit?</Text>
+        <Text variant='small'>
+          <Trans>What is a shielded IBC deposit?</Trans>
+        </Text>
+
         <Icon IconComponent={Info} size='sm' />
       </Pressable>
 

@@ -145,3 +145,28 @@ We use [Storybook](https://storybook.js.org/) to develop and view UI components 
 To make this possible, we use [`react-native-web`](https://necolas.github.io/react-native-web/) (as well as some other utility libraries) to convert React Native components into their HTML equivalents. See `.storybook/main.ts` for more.
 
 Storybook stories should be placed next to the component file they represent, suffixed with `.stories.ts` or `.stories.tsx`. For example, the Storybook stories for a `Button` component would live under `Button/index.stories.ts`.
+
+## Internationalization (i18n)
+
+We use [Lingui](https://lingui.dev/) to manage translations in Prax Mobile.
+
+When rendering literal text in the app, make sure the text is wrapped in either a `<Trans />` component or a `` t`...` `` call. (Get `t` from`useLingui()`: `const { t } = useLingui()`.)
+
+When wrapping translatable text in `<Trans />`, make sure to put the `<Trans />` component as close to the translatable text as possible:
+
+```tsx
+<Text><Trans>Correct!</Trans></Text>
+<Trans><Text>Incorrect!</Text></Trans>
+```
+
+This is because, when strings are extracted from your code (see below), any components between `<Trans />` and the translatable text will show up as `<0>`, `<1>`, etc. wrappers in the translation files.
+
+For example, `<Trans><Text>Incorrect!</Text></Trans>` will be extracted as `<0>Incorrect!</0>` in the translation files. But `<Text><Trans>Correct!</Trans></Text>` will be extracted as just `Correct!` in the translation files, which is easier for translators to work with.
+
+The only time you _should_ keep translatable text wrapped in a surrounding component _inside_ `<Trans />` is when multiple text components form a single unit, e.g., `<Trans><Text>This is a single sentence with a word in <Text style={{ fontWeight: 'bold' }}>bold</Text>.</Text></Trans>`.
+
+(Note: Lingui does allow a [`defaultComponent` prop](https://lingui.dev/ref/react#i18nprovider) to wrap all translatable strings rendered in a `<Trans />` with a `<Text />` component. However, for the purpose of being explicit about what is being rendered, we just use Lingui _without_ the default component.)
+
+### Extraction
+
+Once you've added new translatable messages to the app via either `<Trans />` or `` t`...` ``, run `yarn extract` to extract the new strings to `locales/{locale}/messages.po`.

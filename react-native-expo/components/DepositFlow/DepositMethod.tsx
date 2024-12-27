@@ -6,26 +6,30 @@ import Icon from '../Icon';
 import { ChevronRight } from 'lucide-react-native';
 import { setStep } from '@/store/depositFlow';
 import { useAppDispatch } from '@/store/hooks';
+import { Trans, useLingui } from '@lingui/react/macro';
 
 export default function DepositMethod() {
   const dispatch = useAppDispatch();
+  const { t } = useLingui();
 
   return (
     <>
-      <Text variant='large'>Select deposit method</Text>
+      <Text variant='large'>
+        <Trans>Select deposit method</Trans>
+      </Text>
 
       <ListItems>
         <ListItem
           avatar={<AssetIcon />}
-          primaryText='Shielded IBC deposit'
+          primaryText={t`Shielded IBC deposit`}
           suffix={<Icon IconComponent={ChevronRight} size='md' color='neutralLight' />}
           onPress={() => dispatch(setStep('address'))}
         />
 
         <ListItem
           avatar={<AssetIcon />}
-          primaryText='Noble USDC deposit'
-          secondaryText='Coming soon'
+          primaryText={t`Noble USDC deposit`}
+          secondaryText={t`Coming soon`}
         />
       </ListItems>
     </>

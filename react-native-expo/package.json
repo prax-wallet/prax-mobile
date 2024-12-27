@@ -11,13 +11,16 @@
     "test": "jest --watchAll",
     "lint": "expo lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "extract": "lingui extract"
   },
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
+    "@lingui/core": "^5.1.2",
+    "@lingui/react": "^5.1.2",
     "@react-navigation/bottom-tabs": "^7.0.0",
     "@react-navigation/native": "^7.0.0",
     "@reduxjs/toolkit": "^2.5.0",
@@ -52,6 +55,9 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@chromatic-com/storybook": "^3.2.2",
+    "@lingui/babel-plugin-lingui-macro": "^5.1.2",
+    "@lingui/cli": "^5.1.2",
+    "@lingui/metro-transformer": "^5.1.2",
     "@react-native/babel-preset": "^0.76.5",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
