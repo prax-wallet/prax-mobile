@@ -6,8 +6,8 @@ export interface ListItemsProps {
 }
 
 /**
- * Simple wrapper to use around multiple `<ListItem />`s to space them out
- * nicely.
+ * Simple wrapper to use around multiple `<ListItem />`s to give them consistent
+ * spacing throughout the app.
  */
 export default function ListItems({ children }: ListItemsProps) {
   return <View sx={sx.root}>{children}</View>;
