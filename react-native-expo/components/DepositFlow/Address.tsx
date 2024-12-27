@@ -1,9 +1,11 @@
 import Button from '../Button';
 import * as Clipboard from 'expo-clipboard';
-import { Pressable, Sx, Text, View } from 'dripsy';
-import { useState } from 'react';
 import Icon from '../Icon';
 import { Info } from 'lucide-react-native';
+import { Pressable, Sx, Text, View } from 'dripsy';
+import { setStep } from '@/store/depositFlow';
+import { useAppDispatch } from '@/store/hooks';
+import { useState } from 'react';
 
 const MOCK_PENUMBRA_ADDRESS =
   'penumbra147mfall0zr6am5r45qkwht7xqqrdsp50czde7empv7yq2nk3z8yyfh9k9520ddgswkmzar22vhz9dwtuem7uxw0qytfpv7lk3q9dp8ccaw2fn5c838rfackazmgf3ahh09cxmz';
@@ -20,6 +22,7 @@ const BUTTON_PROPS_COPIED = {
 
 export default function Address() {
   const [buttonProps, setButtonProps] = useState(BUTTON_PROPS_DEFAULT);
+  const dispatch = useAppDispatch();
 
   const copyToClipboard = async () => {
     await Clipboard.setStringAsync(MOCK_PENUMBRA_ADDRESS);
@@ -39,7 +42,7 @@ export default function Address() {
         <Text variant='small'>{MOCK_PENUMBRA_ADDRESS}</Text>
       </View>
 
-      <Pressable sx={sx.helpButton}>
+      <Pressable sx={sx.helpButton} onPress={() => dispatch(setStep('help'))}>
         <Text variant='small'>What is a shielded IBC deposit?</Text>
         <Icon IconComponent={Info} size='sm' />
       </Pressable>

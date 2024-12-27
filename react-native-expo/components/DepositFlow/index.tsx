@@ -3,6 +3,7 @@ import ActionSheet from '../ActionSheet';
 import DepositMethod from './DepositMethod';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import Address from './Address';
+import Help from './Help';
 
 export interface DepositFlowProps {
   isOpen: boolean;
@@ -22,6 +23,7 @@ export default function DepositFlow({ isOpen, onClose }: DepositFlowProps) {
     <ActionSheet isOpen={isOpen} onClose={handleClose}>
       {step === 'depositMethod' && <DepositMethod />}
       {step === 'address' && <Address />}
+      {step === 'help' && <Help />}
     </ActionSheet>
   );
 }

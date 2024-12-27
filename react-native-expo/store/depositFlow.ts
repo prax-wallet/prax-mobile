@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type DepositFlowStep = 'depositMethod' | 'address';
+export type DepositFlowStep = 'depositMethod' | 'address' | 'help';
 
 export interface DepositFlowState {
   isOpen: boolean;
