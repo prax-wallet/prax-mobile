@@ -1,5 +1,6 @@
 import { DripsyProvider } from 'dripsy';
 import dripsyTheme from '../utils/dripsyTheme';
+import PraxI18nProvider from '../components/PraxI18nProvider';
 import type { Preview } from '@storybook/react';
 import React from 'react';
 /**
@@ -12,9 +13,11 @@ import './fonts.css';
 const preview: Preview = {
   decorators: [
     Story => (
-      <DripsyProvider theme={dripsyTheme}>
-        <Story />
-      </DripsyProvider>
+      <PraxI18nProvider>
+        <DripsyProvider theme={dripsyTheme}>
+          <Story />
+        </DripsyProvider>
+      </PraxI18nProvider>
     ),
   ],
   parameters: {

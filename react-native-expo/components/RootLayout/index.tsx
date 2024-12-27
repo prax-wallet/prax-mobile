@@ -1,14 +1,10 @@
 import AppInitializationContext from '@/contexts/AppInitializationContext';
 import FontProvider from './FontProvider';
-import { i18n } from '@lingui/core';
-import { I18nProvider } from '@lingui/react';
-import { messages } from '@/locales/en/messages';
+import PraxDripsyProvider from '../PraxDripsyProvider';
+import PraxI18nProvider from '../PraxI18nProvider';
 import ReduxProvider from '../ReduxProvider';
 import { Stack } from 'expo-router';
 import useInitializeApp from './useInitializeApp';
-import PraxDripsyProvider from '../PraxDripsyProvider';
-
-i18n.loadAndActivate({ locale: 'en', messages });
 
 const STACK_SCREEN_OPTIONS = {
   contentStyle: { backgroundColor: 'white' },
@@ -19,7 +15,7 @@ export default function RootLayout() {
   const appInitialization = useInitializeApp();
 
   return (
-    <I18nProvider i18n={i18n}>
+    <PraxI18nProvider>
       <ReduxProvider>
         <FontProvider>
           <PraxDripsyProvider>
@@ -31,6 +27,6 @@ export default function RootLayout() {
           </PraxDripsyProvider>
         </FontProvider>
       </ReduxProvider>
-    </I18nProvider>
+    </PraxI18nProvider>
   );
 }

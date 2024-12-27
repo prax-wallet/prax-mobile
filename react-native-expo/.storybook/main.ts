@@ -1,3 +1,4 @@
+import { lingui } from '@lingui/vite-plugin';
 import path from 'path';
 import react from '@vitejs/plugin-react';
 import type { StorybookConfig } from '@storybook/react-vite';
@@ -19,8 +20,15 @@ const config: StorybookConfig = {
         },
       },
       plugins: [
+        // Required so that i18n works in Storybook
+        lingui(),
         // Allows us to use JSX without `import React from 'react'`
-        react({ jsxRuntime: 'automatic' }),
+        react({
+          jsxRuntime: 'automatic',
+          babel: {
+            plugins: ['@lingui/babel-plugin-lingui-macro'],
+          },
+        }),
         // Allows us to `import foo from './foo.svg'` in Storybook Web just like
         // in React Native.
         svgr({ svgrOptions: { exportType: 'default' } }),
