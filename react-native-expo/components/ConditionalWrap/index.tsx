@@ -51,11 +51,8 @@ export interface ConditionalWrapProps {
  */
 export const ConditionalWrap = ({
   children,
-
-  // Rename these to avoid using reserved words
   if: condition,
   then: thenWrapper,
   else: elseWrapper,
 }: ConditionalWrapProps) =>
-  // eslint-disable-next-line no-nested-ternary -- simple nested ternary
   condition ? thenWrapper(children) : elseWrapper ? elseWrapper(children) : children;
