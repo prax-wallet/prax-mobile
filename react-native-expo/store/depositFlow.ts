@@ -1,11 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+export type DepositFlowStep = 'depositMethod' | 'address';
 
 export interface DepositFlowState {
   isOpen: boolean;
+  step: DepositFlowStep;
 }
 
 const initialState: DepositFlowState = {
   isOpen: false,
+  step: 'depositMethod',
 };
 
 export const depositFlowSlice = createSlice({
@@ -18,9 +22,12 @@ export const depositFlowSlice = createSlice({
     close: state => {
       state.isOpen = false;
     },
+    setStep: (state, action: PayloadAction<DepositFlowStep>) => {
+      state.step = action.payload;
+    },
   },
 });
 
-export const { open, close } = depositFlowSlice.actions;
+export const { open, close, setStep } = depositFlowSlice.actions;
 
 export default depositFlowSlice.reducer;
