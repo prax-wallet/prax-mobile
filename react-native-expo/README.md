@@ -170,3 +170,7 @@ The only time you _should_ keep translatable text wrapped in a surrounding compo
 ### Extraction
 
 Once you've added new translatable messages to the app via either `<Trans />` or `` t`...` ``, run `yarn extract` to extract the new strings to `locales/{locale}/messages.po`.
+
+### Compilation
+
+After messages have been extracted via `yarn extract`, run `yarn compile` to compile them to TypeScript files that can be read by the codebase.

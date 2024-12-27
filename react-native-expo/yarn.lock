@@ -1841,16 +1841,6 @@
     "@messageformat/parser" "^5.0.0"
     js-sha256 "^0.10.1"
 
-"@lingui/metro-transformer@^5.1.2":
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/@lingui/metro-transformer/-/metro-transformer-5.1.2.tgz#07a9ba4e014b0e5c5bbac8f0690a8e7de0d38dd1"
-  integrity sha512-ijIMe2VNbfSxnuTBSbnFqojgO26/RxOu47bLqqK23Ebhdkl+lTG2kZiJdhKlRwchFR18NB/VNhDsbUJbaPZwoQ==
-  dependencies:
-    "@babel/runtime" "^7.20.13"
-    "@lingui/cli" "^5.1.2"
-    "@lingui/conf" "^5.1.2"
-    memoize-one "^6.0.0"
-
 "@lingui/react@^5.1.2":
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/@lingui/react/-/react-5.1.2.tgz#0ab2976300c4fed98144b72f200653c5a14eb1af"

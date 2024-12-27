@@ -12,7 +12,8 @@
     "lint": "expo lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "extract": "lingui extract"
+    "extract": "lingui extract",
+    "compile": "lingui compile --typescript"
   },
   "jest": {
     "preset": "jest-expo"
@@ -57,7 +58,6 @@
     "@chromatic-com/storybook": "^3.2.2",
     "@lingui/babel-plugin-lingui-macro": "^5.1.2",
     "@lingui/cli": "^5.1.2",
-    "@lingui/metro-transformer": "^5.1.2",
     "@react-native/babel-preset": "^0.76.5",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
