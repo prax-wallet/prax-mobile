@@ -1,6 +1,4 @@
 import AppInitializationContext from '@/contexts/AppInitializationContext';
-import { DripsyProvider } from 'dripsy';
-import dripsyTheme from '@/utils/dripsyTheme';
 import FontProvider from './FontProvider';
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
@@ -8,6 +6,7 @@ import { messages } from '@/locales/en/messages';
 import ReduxProvider from '../ReduxProvider';
 import { Stack } from 'expo-router';
 import useInitializeApp from './useInitializeApp';
+import PraxDripsyProvider from '../PraxDripsyProvider';
 
 i18n.loadAndActivate({ locale: 'en', messages });
 
@@ -23,13 +22,13 @@ export default function RootLayout() {
     <I18nProvider i18n={i18n}>
       <ReduxProvider>
         <FontProvider>
-          <DripsyProvider theme={dripsyTheme}>
+          <PraxDripsyProvider>
             <AppInitializationContext.Provider value={appInitialization}>
               <Stack screenOptions={STACK_SCREEN_OPTIONS}>
                 <Stack.Screen name='(tabs)' />
               </Stack>
             </AppInitializationContext.Provider>
-          </DripsyProvider>
+          </PraxDripsyProvider>
         </FontProvider>
       </ReduxProvider>
     </I18nProvider>
