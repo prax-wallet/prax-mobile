@@ -7,14 +7,18 @@ export interface ListProps {
    */
   children: ReactNode;
   title?: string;
+  /** Button/etc. to render to the right of the title. */
+  primaryAction?: ReactNode;
 }
 
-export default function List({ children, title }: ListProps) {
+export default function List({ children, title, primaryAction }: ListProps) {
   return (
     <View sx={sx.root}>
       {!!title && (
         <View sx={sx.title}>
           <Text variant='large'>{title}</Text>
+
+          {primaryAction}
         </View>
       )}
       {children}
@@ -34,5 +38,8 @@ const sx = {
   title: {
     p: '$4',
     pb: '$2',
+
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 } satisfies Record<string, Sx>;
