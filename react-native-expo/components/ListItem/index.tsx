@@ -40,9 +40,13 @@ export default function ListItem({
       {avatar}
 
       <View sx={sx.textWrapper}>
-        <Text>{primaryText}</Text>
+        <Text numberOfLines={1}>{primaryText}</Text>
 
-        {!!secondaryText && <Text sx={sx.secondary}>{secondaryText}</Text>}
+        {!!secondaryText && (
+          <Text sx={sx.secondary} numberOfLines={1}>
+            {secondaryText}
+          </Text>
+        )}
       </View>
 
       {suffix}
