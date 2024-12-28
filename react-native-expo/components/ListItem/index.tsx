@@ -43,7 +43,7 @@ export default function ListItem({
         <Text numberOfLines={1}>{primaryText}</Text>
 
         {!!secondaryText && (
-          <Text sx={sx.secondary} numberOfLines={1}>
+          <Text sx={sx.secondaryText} numberOfLines={1}>
             {secondaryText}
           </Text>
         )}
@@ -66,7 +66,7 @@ const sx = {
     p: '$4',
   },
 
-  secondary: {
+  secondaryText: {
     variant: 'text.small',
     color: 'neutralLight',
   },
@@ -77,5 +77,6 @@ const sx = {
     justifyContent: 'center',
     gap: 0.5,
     flexGrow: 1,
+    flexShrink: 1,
   },
 } satisfies Record<string, Sx>;
