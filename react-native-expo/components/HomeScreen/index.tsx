@@ -4,6 +4,7 @@ import DepositFlow from '../DepositFlow';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { close, open } from '@/store/depositFlow';
 import { Trans } from '@lingui/react/macro';
+import HomeScreenTransactionsList from './HomeScreenTransactionsList';
 
 export interface HomeScreenProps {}
 
@@ -13,6 +14,7 @@ export default function HomeScreen() {
 
   return (
     <>
+      {/** @todo: Make this a `ScrollView`. */}
       <View sx={sx.root}>
         <View sx={sx.balanceWrapper}>
           <Text sx={sx.balanceLabel}>
@@ -29,6 +31,8 @@ export default function HomeScreen() {
             <Trans>Request</Trans>
           </Button>
         </View>
+
+        <HomeScreenTransactionsList />
       </View>
 
       <DepositFlow isOpen={isOpen} onClose={() => dispatch(close())} />
@@ -65,5 +69,6 @@ const sx = {
   root: {
     flexGrow: 1,
     flexDirection: 'column',
+    px: 'screenHorizontalMargin',
   },
 } satisfies Record<string, Sx>;
