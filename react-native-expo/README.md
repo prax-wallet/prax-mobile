@@ -174,3 +174,11 @@ Once you've added new translatable messages to the app via either `<Trans />` or
 ### Compilation
 
 After messages have been extracted via `yarn extract`, run `yarn compile` to compile them to TypeScript files that can be read by the codebase.
+
+## Redux
+
+We use [Redux](https://redux.js.org/) for state management in Prax Mobile, along with [Redux Toolkit](https://redux-toolkit.js.org/).
+
+### Typed hooks
+
+To use `redux-react`'s `useSelector` and `useDispatch` hooks, do not import them directly. Instead, import the typed versions from `@/store/hooks`, which are bound to our store's TypeScript types.
