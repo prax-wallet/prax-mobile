@@ -3,7 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export type DepositFlowStep = 'depositMethod' | 'address' | 'help';
 
 export interface DepositFlowState {
+  /** Whether the deposit action sheet is currently open. */
   isOpen: boolean;
+  /** Which step we're at in the deposit flow. */
   step: DepositFlowStep;
 }
 
