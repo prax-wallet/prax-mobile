@@ -10,9 +10,23 @@ export interface ActionSheetProps {
 }
 
 /**
- * For now, a simple wrapper around `react-native-actions-sheet` that allows
- * declarative control of the action sheet via `isOpen` and `onClose` props,
- * rather than needing a `ref` to control the action sheet imperatively.
+ * Renders an action sheet that slides up from the bottom of the screen for UI
+ * flows that don't require an entire route/screen.
+ *
+ * Pass it `isOpen` and `onClose` to control its state with, e.g., Redux.
+ *
+ * ```tsx
+ * <ActionSheet isOpen={isOpen} onClose={onClose}>
+ *   <View>
+ *     <Text>ActionSheet content here.</Text>
+ *   </View>
+ * </ActionSheet>
+ * ```
+ *
+ * For now, `<ActionSheet />` is implemented as a simple wrapper around
+ * `react-native-actions-sheet` that allows declarative control of the action
+ * sheet via `isOpen` and `onClose` props, rather than needing a `ref` to
+ * control the action sheet imperatively.
  *
  * Eventually, this will also apply Prax Wallet's proper styling to the action
  * sheet, at which point this comment should be deleted/updated.
