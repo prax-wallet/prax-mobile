@@ -1,0 +1,89 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2024-12-26 21:32-0800\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: components/DepositFlow/Help.tsx:17
+msgid "A Shielded IBC Deposit allows you to transfer assets (e.g., ATOM, OSMO) from Cosmos-based networks into Penumbra's shielded pool. Once deposited, your assets become private and anonymous, ensuring maximum confidentiality when used within Penumbra."
+msgstr "A Shielded IBC Deposit allows you to transfer assets (e.g., ATOM, OSMO) from Cosmos-based networks into Penumbra's shielded pool. Once deposited, your assets become private and anonymous, ensuring maximum confidentiality when used within Penumbra."
+
+#: components/TradeScreen/index.tsx:25
+msgid "Allow notifications"
+msgstr "Allow notifications"
+
+#: components/HomeScreen/index.tsx:19
+msgid "Balance"
+msgstr "Balance"
+
+#: components/TradeScreen/index.tsx:15
+#: components/DepositFlow/DepositMethod.tsx:32
+msgid "Coming soon"
+msgstr "Coming soon"
+
+#: components/DepositFlow/Address.tsx:23
+msgid "Copied!"
+msgstr "Copied!"
+
+#: components/DepositFlow/Address.tsx:18
+msgid "Copy IBC address"
+msgstr "Copy IBC address"
+
+#: components/HomeScreen/index.tsx:26
+msgid "Deposit"
+msgstr "Deposit"
+
+#: components/TabsLayout/index.tsx:29
+msgid "Home"
+msgstr "Home"
+
+#: components/DepositFlow/DepositMethod.tsx:31
+msgid "Noble USDC deposit"
+msgstr "Noble USDC deposit"
+
+#: components/DepositFlow/Help.tsx:25
+msgid "OK"
+msgstr "OK"
+
+#: components/TabsLayout/index.tsx:31
+msgid "Portfolio"
+msgstr "Portfolio"
+
+#: components/HomeScreen/index.tsx:29
+msgid "Request"
+msgstr "Request"
+
+#: components/DepositFlow/DepositMethod.tsx:18
+msgid "Select deposit method"
+msgstr "Select deposit method"
+
+#: components/DepositFlow/Help.tsx:13
+#: components/DepositFlow/DepositMethod.tsx:24
+#: components/DepositFlow/Address.tsx:40
+msgid "Shielded IBC deposit"
+msgstr "Shielded IBC deposit"
+
+#: components/DepositFlow/Address.tsx:44
+msgid "This address rotates for each deposit to ensure privacy in Penumbra's shielded pool."
+msgstr "This address rotates for each deposit to ensure privacy in Penumbra's shielded pool."
+
+#: components/TabsLayout/index.tsx:30
+msgid "Trade"
+msgstr "Trade"
+
+#: components/TradeScreen/index.tsx:19
+msgid "Turn on push notifications so you don't miss out when trading becomes available!"
+msgstr "Turn on push notifications so you don't miss out when trading becomes available!"
+
+#: components/DepositFlow/Address.tsx:55
+msgid "What is a shielded IBC deposit?"
+msgstr "What is a shielded IBC deposit?"

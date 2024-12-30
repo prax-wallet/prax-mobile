@@ -3,6 +3,7 @@ import { Sx, Text, View } from 'dripsy';
 import DepositFlow from '../DepositFlow';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { close, open } from '@/store/depositFlow';
+import { Trans } from '@lingui/react/macro';
 
 export interface HomeScreenProps {}
 
@@ -14,15 +15,19 @@ export default function HomeScreen() {
     <>
       <View sx={sx.root}>
         <View sx={sx.balanceWrapper}>
-          <Text sx={sx.balanceLabel}>Balance</Text>
+          <Text sx={sx.balanceLabel}>
+            <Trans>Balance</Trans>
+          </Text>
           <Text sx={sx.balance}>0.00 USDC</Text>
         </View>
 
         <View sx={sx.buttons}>
           <Button actionType='accent' onPress={() => dispatch(open())}>
-            Deposit
+            <Trans>Deposit</Trans>
           </Button>
-          <Button>Request</Button>
+          <Button>
+            <Trans>Request</Trans>
+          </Button>
         </View>
       </View>
 

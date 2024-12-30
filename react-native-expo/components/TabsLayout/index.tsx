@@ -5,20 +5,37 @@ import { ChartCandlestick, Coins, Home, LucideIcon } from 'lucide-react-native';
 import Icon from '../Icon';
 import { ParamListBase, RouteProp } from '@react-navigation/native';
 import { Text } from 'dripsy';
+import { useLingui } from '@lingui/react/macro';
 
-const ROUTES: Record<string, { IconComponent: LucideIcon; title: string }> = {
-  index: {
-    IconComponent: Home,
-    title: 'Home',
-  },
-  trade: {
-    IconComponent: ChartCandlestick,
-    title: 'Trade',
-  },
-  portfolio: {
-    IconComponent: Coins,
-    title: 'Portfolio',
-  },
+const ICONS_BY_ROUTE: Record<string, LucideIcon> = {
+  index: Home,
+  trade: ChartCandlestick,
+  portfolio: Coins,
+};
+
+/**
+ * Rendered as a component so we can take advantage of the `useLingui()` hook.
+ */
+const Title = ({
+  routeName,
+  focused,
+}: {
+  routeName: keyof typeof ICONS_BY_ROUTE;
+  focused: boolean;
+}) => {
+  const { t } = useLingui();
+
+  const TITLES_BY_ROUTE_NAME: Record<keyof typeof ICONS_BY_ROUTE, string> = {
+    index: t`Home`,
+    trade: t`Trade`,
+    portfolio: t`Portfolio`,
+  };
+
+  return (
+    <Text sx={{ color: focused ? 'neutralDark' : 'neutralLight' }} variant='small'>
+      {TITLES_BY_ROUTE_NAME[routeName]}
+    </Text>
+  );
 };
 
 const TABS_SCREEN_OPTIONS = ({ route }: { route: RouteProp<ParamListBase, string> }) => {
@@ -41,14 +58,10 @@ const TABS_SCREEN_OPTIONS = ({ route }: { route: RouteProp<ParamListBase, string
           break;
       }
 
-      return <Icon IconComponent={ROUTES[route.name].IconComponent} size='md' color={color} />;
+      return <Icon IconComponent={ICONS_BY_ROUTE[route.name]} size='md' color={color} />;
     },
     // @ts-expect-error - Types are wrong for `title`
-    title: ({ focused }) => (
-      <Text sx={{ color: focused ? 'neutralDark' : 'neutralLight' }} variant='small'>
-        {ROUTES[route.name].title}
-      </Text>
-    ),
+    title: ({ focused }) => <Title focused={focused} routeName={route.name} />,
   } satisfies BottomTabNavigationOptions;
 };
 
