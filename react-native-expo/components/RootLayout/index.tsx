@@ -5,6 +5,7 @@ import PraxI18nProvider from '../PraxI18nProvider';
 import ReduxProvider from '../ReduxProvider';
 import { Stack } from 'expo-router';
 import useInitializeApp from './useInitializeApp';
+import BackButtonHeader from '../BackButtonHeader';
 
 const STACK_SCREEN_OPTIONS = {
   contentStyle: { backgroundColor: 'white' },
@@ -22,6 +23,10 @@ export default function RootLayout() {
             <AppInitializationContext.Provider value={appInitialization}>
               <Stack screenOptions={STACK_SCREEN_OPTIONS}>
                 <Stack.Screen name='(tabs)' />
+                <Stack.Screen
+                  name='transactions'
+                  options={{ header: () => <BackButtonHeader /> }}
+                />
               </Stack>
             </AppInitializationContext.Provider>
           </PraxDripsyProvider>

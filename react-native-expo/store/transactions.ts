@@ -1,10 +1,11 @@
 import penumbraAddressFactory from '@/factories/penumbraAddress';
 import transactionFactory from '@/factories/transaction';
 import Transaction from '@/types/Transaction';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface TransactionsState {
   transactions: Transaction[];
+  searchText: string;
 }
 
 const initialState: TransactionsState = {
@@ -25,14 +26,19 @@ const initialState: TransactionsState = {
       recipientAddress: penumbraAddressFactory.build().value,
     }),
   ],
+  searchText: '',
 };
 
 export const transactionsSlice = createSlice({
   name: 'transactions',
   initialState,
-  reducers: {},
+  reducers: {
+    setSearchText: (state, action: PayloadAction<string>) => {
+      state.searchText = action.payload;
+    },
+  },
 });
 
-export const {} = transactionsSlice.actions;
+export const { setSearchText } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;
