@@ -6,8 +6,6 @@ import { close, open } from '@/store/depositFlow';
 import { Trans } from '@lingui/react/macro';
 import HomeScreenTransactionsList from './HomeScreenTransactionsList';
 
-export interface HomeScreenProps {}
-
 export default function HomeScreen() {
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(state => state.depositFlow.isOpen);
