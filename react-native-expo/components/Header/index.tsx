@@ -1,18 +1,19 @@
-import { Image, Sx, View, SafeAreaView } from 'dripsy';
-import logo from './logo.png';
-import Avatar from '../Avatar';
+import { SafeAreaView, Sx, View } from 'dripsy';
+import { ReactNode } from 'react';
 
-export default function Header() {
+export interface HeaderProps {
+  left?: ReactNode;
+  center?: ReactNode;
+  right?: ReactNode;
+}
+
+export default function Header({ left, center, right }: HeaderProps) {
   return (
     <SafeAreaView>
       <View sx={sx.root}>
-        <View sx={sx.left}>
-          <Avatar />
-        </View>
-        <View sx={sx.center}>
-          <Image sx={sx.logo} source={logo} />
-        </View>
-        <View sx={sx.right} />
+        <View sx={sx.left}>{left}</View>
+        <View sx={sx.center}>{center}</View>
+        <View sx={sx.right}>{right}</View>
       </View>
     </SafeAreaView>
   );
@@ -29,12 +30,6 @@ const sx = {
   left: {
     width: '$8',
     height: '$8',
-  },
-
-  logo: {
-    height: 16,
-    width: 76,
-    resizeMode: 'contain',
   },
 
   right: {
