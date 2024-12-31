@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type DepositFlowStep = 'depositMethod' | 'address' | 'help';
+export enum DepositFlowStep {
+  DepositMethod = 'depositMethod',
+  Address = 'address',
+  Help = 'help',
+}
 
 export interface DepositFlowState {
   /** Whether the deposit action sheet is currently open. */
@@ -11,7 +15,7 @@ export interface DepositFlowState {
 
 const initialState: DepositFlowState = {
   isOpen: false,
-  step: 'depositMethod',
+  step: DepositFlowStep.DepositMethod,
 };
 
 export const depositFlowSlice = createSlice({

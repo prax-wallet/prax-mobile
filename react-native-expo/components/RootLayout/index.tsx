@@ -4,7 +4,7 @@ import dripsyTheme from '@/utils/dripsyTheme';
 import FontProvider from './FontProvider';
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
-import { messages } from '@/locales/en/messages.po';
+import { messages } from '@/locales/en/messages';
 import ReduxProvider from '../ReduxProvider';
 import { Stack } from 'expo-router';
 import useInitializeApp from './useInitializeApp';

@@ -1,4 +1,4 @@
-import { setStep } from '@/store/depositFlow';
+import { DepositFlowStep, setStep } from '@/store/depositFlow';
 import ActionSheet from '../ActionSheet';
 import DepositMethod from './DepositMethod';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -16,14 +16,14 @@ export default function DepositFlow({ isOpen, onClose }: DepositFlowProps) {
 
   const handleClose = () => {
     onClose();
-    dispatch(setStep('depositMethod'));
+    dispatch(setStep(DepositFlowStep.DepositMethod));
   };
 
   return (
     <ActionSheet isOpen={isOpen} onClose={handleClose}>
-      {step === 'depositMethod' && <DepositMethod />}
-      {step === 'address' && <Address />}
-      {step === 'help' && <Help />}
+      {step === DepositFlowStep.DepositMethod && <DepositMethod />}
+      {step === DepositFlowStep.Address && <Address />}
+      {step === DepositFlowStep.Help && <Help />}
     </ActionSheet>
   );
 }
