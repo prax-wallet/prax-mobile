@@ -20,7 +20,7 @@ describe('<Transaction />', () => {
         { wrapper: PraxDripsyProvider },
       );
 
-      expect(queryByText('This is the memo')).not.toBeNull();
+      expect(queryByText('This is the memo')).toBeOnTheScreen();
     });
   });
 
@@ -34,7 +34,7 @@ describe('<Transaction />', () => {
           { wrapper: PraxDripsyProvider },
         );
 
-        expect(queryByText(MOCK_PENUMBRA_ADDRESS)).not.toBeNull();
+        expect(queryByText(MOCK_PENUMBRA_ADDRESS)).toBeOnTheScreen();
       });
     });
 
@@ -52,7 +52,40 @@ describe('<Transaction />', () => {
           { wrapper: PraxDripsyProvider },
         );
 
-        expect(queryByText('@henry')).not.toBeNull();
+        expect(queryByText('@henry')).toBeOnTheScreen();
+      });
+    });
+  });
+
+  describe('`send` transaction', () => {
+    describe('when the transaction has no `recipientUsername`', () => {
+      it("renders the recipient's address", () => {
+        const { queryByText } = render(
+          <Transaction
+            transaction={{ id: 'abc123', type: 'send', recipientAddress: MOCK_PENUMBRA_ADDRESS }}
+          />,
+          { wrapper: PraxDripsyProvider },
+        );
+
+        expect(queryByText(MOCK_PENUMBRA_ADDRESS)).toBeOnTheScreen();
+      });
+    });
+
+    describe('when the transaction has a `recipientUsername`', () => {
+      it("renders the recipient's username prefixed with `@`", () => {
+        const { queryByText } = render(
+          <Transaction
+            transaction={{
+              id: 'abc123',
+              type: 'send',
+              recipientAddress: MOCK_PENUMBRA_ADDRESS,
+              recipientUsername: 'henry',
+            }}
+          />,
+          { wrapper: PraxDripsyProvider },
+        );
+
+        expect(queryByText('@henry')).toBeOnTheScreen();
       });
     });
   });
