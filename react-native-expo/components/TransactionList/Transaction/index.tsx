@@ -6,6 +6,7 @@ export interface TransactionProps {
   transaction: ITransaction;
 }
 
+/** Represents a transaction as a `<ListItem />`. */
 export default function Transaction({ transaction }: TransactionProps) {
   switch (transaction.type) {
     case 'receive':

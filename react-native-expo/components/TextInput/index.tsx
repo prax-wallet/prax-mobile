@@ -5,6 +5,9 @@ export interface TextInputProps {
   onChangeText?: (value: string) => void;
 }
 
+/**
+ * Wraps React Native's `<TextInput />`, while adding Prax styles.
+ */
 export default function TextInput({ value, onChangeText }: TextInputProps) {
   return (
     <View sx={sx.root}>

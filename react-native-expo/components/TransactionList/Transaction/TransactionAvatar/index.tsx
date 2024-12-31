@@ -7,6 +7,15 @@ export interface TransactionAvatarProps {
   via?: 'link';
 }
 
+/**
+ * Renders an avatar representing a transaction.
+ *
+ * For now, just shows a link icon if the transaction was sent via link, as well
+ * as an up or down arrow representing a send or receive transaction,
+ * respectively.
+ *
+ * In the future, may be extended to show sender/recipient avatars and more.
+ */
 export default function TransactionAvatar({ direction, via }: TransactionAvatarProps) {
   return (
     <View sx={sx.root}>
