@@ -11,6 +11,12 @@ export interface ListProps {
   primaryAction?: ReactNode;
 }
 
+/**
+ * Presents list items as a unit with a shaded background and an optional title.
+ *
+ * To simply display list items with a gap between each (but no background or
+ * title), use `<ListItems />`.
+ */
 export default function List({ children, title, primaryAction }: ListProps) {
   return (
     <View sx={sx.root}>

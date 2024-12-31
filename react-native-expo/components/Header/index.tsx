@@ -2,11 +2,26 @@ import { SafeAreaView, Sx, View } from 'dripsy';
 import { ReactNode } from 'react';
 
 export interface HeaderProps {
+  /**
+   * Content to render on the left side of the header, like a back button or
+   * avatar.
+   */
   left?: ReactNode;
+  /**
+   * Content to render in the left side of the header, like a title or logo.
+   */
   center?: ReactNode;
+  /** Content to render on the right side of the header. */
   right?: ReactNode;
 }
 
+/**
+ * Render via a screen's `options.header` to show a header at the top of the
+ * screen.
+ *
+ * If you're looking for a header with a back button, use
+ * `<BackButtonHeader />`.
+ */
 export default function Header({ left, center, right }: HeaderProps) {
   return (
     <SafeAreaView>
