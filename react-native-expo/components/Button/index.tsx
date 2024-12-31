@@ -19,13 +19,20 @@ export interface ButtonProps {
    */
   actionType?: ActionType;
   onPress?: ((event: GestureResponderEvent) => void) | null;
+  disabled?: boolean;
 }
 
-export default function Button({ children, onPress, actionType = 'default' }: ButtonProps) {
+export default function Button({
+  children,
+  onPress,
+  actionType = 'default',
+  disabled,
+}: ButtonProps) {
   return (
     <Pressable
       sx={{ ...sx.root, ...(actionType === 'accent' ? sx.accent : sx.default) }}
       onPress={onPress}
+      disabled={disabled}
     >
       <Text variant='button' sx={actionType === 'accent' ? sx.textAccent : sx.textDefault}>
         {children}

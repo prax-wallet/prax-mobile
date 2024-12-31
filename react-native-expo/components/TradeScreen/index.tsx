@@ -1,6 +1,7 @@
 import { Image, Sx, Text, View } from 'dripsy';
 import candlesticks from './candlesticks.png';
 import Button from '../Button';
+import { Trans } from '@lingui/react/macro';
 
 export default function TradeScreen() {
   return (
@@ -10,13 +11,19 @@ export default function TradeScreen() {
       </View>
 
       <View sx={sx.text}>
-        <Text sx={sx.headline}>Coming soon</Text>
-
-        <Text sx={sx.message}>
-          Turn on push notifications so you don't miss out when trading becomes available!
+        <Text sx={sx.headline}>
+          <Trans>Coming soon</Trans>
         </Text>
 
-        <Button actionType='accent'>Allow notifications</Button>
+        <Text sx={sx.message}>
+          <Trans>
+            Turn on push notifications so you don't miss out when trading becomes available!
+          </Trans>
+        </Text>
+
+        <Button actionType='accent'>
+          <Trans>Allow notifications</Trans>
+        </Button>
       </View>
     </View>
   );

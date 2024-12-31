@@ -122,6 +122,14 @@ const dripsyTheme = makeTheme({
     textXxs: 16,
   },
 
+  radii: Object.keys(theme.borderRadius).reduce(
+    (prev, curr) => ({
+      ...prev,
+      [curr]: parseInt(theme.borderRadius[curr as keyof (typeof theme)['borderRadius']], 10),
+    }),
+    {},
+  ),
+
   sizes: {
     $0: 0,
     $1: 4,
