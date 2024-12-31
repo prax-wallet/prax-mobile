@@ -49,7 +49,7 @@ export default function ListItem({
         )}
       </View>
 
-      {suffix}
+      {!!suffix && <View sx={sx.suffixWrapper}>{suffix}</View>}
     </ConditionalWrap>
   );
 }
@@ -69,6 +69,10 @@ const sx = {
   secondaryText: {
     variant: 'text.small',
     color: 'neutralLight',
+  },
+
+  suffixWrapper: {
+    flexShrink: 0,
   },
 
   textWrapper: {
