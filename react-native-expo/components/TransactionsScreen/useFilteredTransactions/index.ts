@@ -1,6 +1,6 @@
 import { useAppSelector } from '@/store/hooks';
 import { useMemo } from 'react';
-import transactionSearchTextFilter from './useFilteredTransactions/transactionSearchTextFilter';
+import transactionSearchTextFilter from './transactionSearchTextFilter';
 
 /**
  * Returns the transactions from state, filtered by the search text from state.
