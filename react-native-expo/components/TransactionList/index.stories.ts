@@ -9,6 +9,7 @@ const meta: Meta<typeof TransactionList> = {
   tags: ['autodocs'],
   argTypes: {
     transactions: { control: false },
+    primaryAction: { control: false },
   },
 };
 
@@ -16,6 +17,7 @@ export default meta;
 
 export const Basic: StoryObj<typeof TransactionList> = {
   args: {
+    showTitle: true,
     transactions: [
       transactionFactory.build({
         senderAddress: penumbraAddressFactory.build().value,
