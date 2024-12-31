@@ -19,6 +19,9 @@
     "preset": "jest-expo",
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/(?!(dripsy|\\@?react-native|\\@?expo|expo-modules-core))"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest-setup.ts"
     ]
   },
   "dependencies": {
