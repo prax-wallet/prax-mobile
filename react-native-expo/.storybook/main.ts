@@ -22,11 +22,15 @@ const config: StorybookConfig = {
       plugins: [
         // Required so that i18n works in Storybook
         lingui(),
-        // Allows us to use JSX without `import React from 'react'`
         react({
+          // Allows us to use JSX without `import React from 'react'`
           jsxRuntime: 'automatic',
           babel: {
-            plugins: ['@lingui/babel-plugin-lingui-macro'],
+            plugins: [
+              // Required so that Lingui `t()` calls and `<Trans />` components
+              // will work.
+              '@lingui/babel-plugin-lingui-macro',
+            ],
           },
         }),
         // Allows us to `import foo from './foo.svg'` in Storybook Web just like
