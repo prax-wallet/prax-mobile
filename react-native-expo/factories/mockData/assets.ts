@@ -12,8 +12,8 @@ const ASSETS = [
     symbol: 'OSMO',
   },
   {
-    name: 'ATOM',
-    symbol: 'Cosmos',
+    name: 'Cosmos',
+    symbol: 'ATOM',
   },
   {
     name: 'USDC',
