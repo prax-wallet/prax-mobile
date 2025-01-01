@@ -1,5 +1,7 @@
 import AssetIcon from '@/components/AssetIcon';
 import ListItem from '@/components/ListItem';
+import { useAppDispatch } from '@/store/hooks';
+import { setSelectedAssetSymbol } from '@/store/portfolioScreen';
 import IBalance from '@/types/Balance';
 import { Sx, Text, View } from 'dripsy';
 
@@ -8,6 +10,8 @@ export interface BalanceProps {
 }
 
 export default function Balance({ balance }: BalanceProps) {
+  const dispatch = useAppDispatch();
+
   return (
     <ListItem
       avatar={<AssetIcon />}
@@ -19,6 +23,7 @@ export default function Balance({ balance }: BalanceProps) {
           <Text sx={sx.equivalentValue}>{balance.equivalentValue} USDC</Text>
         </View>
       }
+      onPress={() => dispatch(setSelectedAssetSymbol(balance.assetSymbol))}
     />
   );
 }
