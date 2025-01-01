@@ -11,8 +11,8 @@ export default function Balance({ balance }: BalanceProps) {
   return (
     <ListItem
       avatar={<AssetIcon />}
-      primaryText={balance.symbol}
-      secondaryText={balance.name}
+      primaryText={balance.assetSymbol}
+      secondaryText={balance.assetName}
       suffix={
         <View sx={sx.suffix}>
           <Text variant='small'>{balance.amount}</Text>

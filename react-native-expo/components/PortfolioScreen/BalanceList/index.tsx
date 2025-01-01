@@ -14,7 +14,7 @@ export default function BalanceList({ balances }: BalanceListProps) {
   return (
     <List title={t`Assets`}>
       {balances.map(balance => (
-        <Balance key={balance.symbol} balance={balance} />
+        <Balance key={balance.assetSymbol} balance={balance} />
       ))}
     </List>
   );
