@@ -1,5 +1,5 @@
-import { Text } from 'dripsy';
+import BalanceAndActions from '../BalanceAndActions';
 
 export default function PortfolioScreen() {
-  return <Text>PortfolioScreen</Text>;
+  return <BalanceAndActions />;
 }
