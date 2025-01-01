@@ -1,32 +1,21 @@
-use anyhow::Result;
-use penumbra_view::ViewServer;
-
-const ENDPOINT: &str = "https://testnet.plinfra.net";
-
-pub async fn start_test_view_server() -> Result<ViewServer> {
-    ViewServer::load_or_initialize(
-        None::<&str>,
-        None::<&str>,
-        &penumbra_keys::test_keys::FULL_VIEWING_KEY,
-        ENDPOINT.parse().unwrap(),
-    )
-    .await
-}
-
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use crate::{create_app_state_container, get_block_height, start_server};
 
     #[tokio::test]
-    async fn test_start_test_view_server() {
-        let svc = start_test_view_server().await.unwrap();
-        let result = svc.latest_known_block_height().await;
+    async fn test_view_server_initialization_and_height() {
+        create_app_state_container()
+            .await
+            .expect("failed to create app state container");
 
-        println!(
-            "Result of latest_known_block_height: {:?}",
-            result.unwrap().0
-        );
+        start_server().await.expect("failed to start server");
 
-        tokio::time::sleep(std::time::Duration::from_secs(5)).await;
+        let block_height = get_block_height().await;
+        match block_height {
+            Ok(_block_height) => {}
+            Err(e) => {
+                panic!("failed to retrieve block height: {:?}", e);
+            }
+        }
     }
 }
