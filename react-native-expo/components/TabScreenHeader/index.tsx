@@ -1,11 +1,22 @@
 import Avatar from '@/components/Avatar';
 import Header from '@/components/Header';
-import { Image, Sx } from 'dripsy';
+import { Image, Pressable, Sx } from 'dripsy';
 import logo from './logo.png';
+import { useRouter } from 'expo-router';
+
+function ProfileButton() {
+  const router = useRouter();
+
+  return (
+    <Pressable onPress={() => router.navigate('/profile')}>
+      <Avatar size='sm' />
+    </Pressable>
+  );
+}
 
 /** The header used by the primary screens accessed via tabs. */
 export default function TabScreenHeader() {
-  return <Header left={<Avatar />} center={<Image sx={sx.logo} source={logo} />} />;
+  return <Header left={<ProfileButton />} center={<Image sx={sx.logo} source={logo} />} />;
 }
 
 const sx = {
