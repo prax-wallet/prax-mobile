@@ -23,6 +23,13 @@ export default function RootLayout() {
             <AppInitializationContext.Provider value={appInitialization}>
               <Stack screenOptions={STACK_SCREEN_OPTIONS}>
                 <Stack.Screen name='(tabs)' />
+
+                <Stack.Screen name='profile' options={{ header: () => <BackButtonHeader /> }} />
+                <Stack.Screen
+                  name='profile/defaultPaymentToken'
+                  options={{ header: () => <BackButtonHeader /> }}
+                />
+
                 <Stack.Screen
                   name='transactions'
                   options={{ header: () => <BackButtonHeader /> }}
