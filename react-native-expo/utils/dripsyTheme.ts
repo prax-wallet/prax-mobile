@@ -156,6 +156,11 @@ const dripsyTheme = makeTheme({
     $8: 32,
     $9: 36,
     $10: 40,
+    /**
+     * Use for views that wrap entire screens, to give them a consistent
+     * horizontal margin throughout the app.
+     */
+    screenHorizontalMargin: 16,
   },
 
   text: {

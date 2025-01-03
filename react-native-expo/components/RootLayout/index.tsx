@@ -1,15 +1,11 @@
 import AppInitializationContext from '@/contexts/AppInitializationContext';
-import { DripsyProvider } from 'dripsy';
-import dripsyTheme from '@/utils/dripsyTheme';
 import FontProvider from './FontProvider';
-import { i18n } from '@lingui/core';
-import { I18nProvider } from '@lingui/react';
-import { messages } from '@/locales/en/messages';
+import PraxDripsyProvider from '../PraxDripsyProvider';
+import PraxI18nProvider from '../PraxI18nProvider';
 import ReduxProvider from '../ReduxProvider';
 import { Stack } from 'expo-router';
 import useInitializeApp from './useInitializeApp';
-
-i18n.loadAndActivate({ locale: 'en', messages });
+import BackButtonHeader from '../BackButtonHeader';
 
 const STACK_SCREEN_OPTIONS = {
   contentStyle: { backgroundColor: 'white' },
@@ -20,18 +16,22 @@ export default function RootLayout() {
   const appInitialization = useInitializeApp();
 
   return (
-    <I18nProvider i18n={i18n}>
+    <PraxI18nProvider>
       <ReduxProvider>
         <FontProvider>
-          <DripsyProvider theme={dripsyTheme}>
+          <PraxDripsyProvider>
             <AppInitializationContext.Provider value={appInitialization}>
               <Stack screenOptions={STACK_SCREEN_OPTIONS}>
                 <Stack.Screen name='(tabs)' />
+                <Stack.Screen
+                  name='transactions'
+                  options={{ header: () => <BackButtonHeader /> }}
+                />
               </Stack>
             </AppInitializationContext.Provider>
-          </DripsyProvider>
+          </PraxDripsyProvider>
         </FontProvider>
       </ReduxProvider>
-    </I18nProvider>
+    </PraxI18nProvider>
   );
 }

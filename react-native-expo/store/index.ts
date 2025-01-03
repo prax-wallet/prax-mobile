@@ -1,9 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import depositFlow from './depositFlow';
+import transactions from './transactions';
 
 const store = configureStore({
   reducer: {
     depositFlow,
+    transactions,
   },
 });
 
