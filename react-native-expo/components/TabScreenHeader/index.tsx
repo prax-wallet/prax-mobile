@@ -3,7 +3,8 @@ import Header from '@/components/Header';
 import { Image, Sx } from 'dripsy';
 import logo from './logo.png';
 
-export default function HomeHeader() {
+/** The header used by the primary screens accessed via tabs. */
+export default function TabScreenHeader() {
   return <Header left={<Avatar />} center={<Image sx={sx.logo} source={logo} />} />;
 }
 

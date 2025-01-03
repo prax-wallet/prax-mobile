@@ -5,6 +5,10 @@ interface TransactionBase {
   memo?: string;
   /** @todo: add more options as they become available */
   via?: 'link';
+  /** The symbol of the asset in this transaction. */
+  assetSymbol: string;
+  /** The name of the asset in this transaction. */
+  assetName: string;
 }
 
 interface ReceiveTransaction extends TransactionBase {

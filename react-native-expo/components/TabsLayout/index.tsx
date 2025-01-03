@@ -6,7 +6,7 @@ import Icon from '../Icon';
 import { ParamListBase, RouteProp } from '@react-navigation/native';
 import { Text } from 'dripsy';
 import { useLingui } from '@lingui/react/macro';
-import HomeHeader from '../HomeScreen/HomeHeader';
+import TabScreenHeader from '../TabScreenHeader';
 
 const ICONS_BY_ROUTE: Record<string, LucideIcon> = {
   index: Home,
@@ -57,11 +57,11 @@ export default function TabsLayout() {
   return (
     // @ts-expect-error - Types are wrong for `title`
     <Tabs screenOptions={TABS_SCREEN_OPTIONS}>
-      <Tabs.Screen name='index' options={{ header: () => <HomeHeader /> }} />
+      <Tabs.Screen name='index' options={{ header: () => <TabScreenHeader /> }} />
 
       <Tabs.Screen name='trade' />
 
-      <Tabs.Screen name='portfolio' />
+      <Tabs.Screen name='portfolio' options={{ header: () => <TabScreenHeader /> }} />
     </Tabs>
   );
 }
