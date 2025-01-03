@@ -1,5 +1,6 @@
 import { TextInput as DripsyTextInput, Sx, useSx, View } from 'dripsy';
 import { ComponentProps, ReactNode } from 'react';
+import { KeyboardTypeOptions } from 'react-native';
 
 export interface TextInputProps {
   value?: string;
@@ -16,6 +17,8 @@ export interface TextInputProps {
    * When the clear button should appear on the right side of the text input.
    */
   clearButtonMode?: ComponentProps<typeof DripsyTextInput>['clearButtonMode'];
+  /** The type of keyboard to display for this text input. */
+  keyboardType?: KeyboardTypeOptions;
 }
 
 /**
@@ -27,6 +30,7 @@ export default function TextInput({
   startAdornment,
   placeholder,
   clearButtonMode,
+  keyboardType,
 }: TextInputProps) {
   const placeholderTextColor = useSx()({ color: 'neutralLight' }).color;
 
@@ -41,6 +45,7 @@ export default function TextInput({
         placeholder={placeholder}
         placeholderTextColor={placeholderTextColor}
         clearButtonMode={clearButtonMode}
+        keyboardType={keyboardType}
       />
     </View>
   );

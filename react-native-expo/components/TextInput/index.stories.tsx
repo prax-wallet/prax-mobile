@@ -21,5 +21,6 @@ export const Basic: StoryObj<typeof TextInput> = {
     startAdornment: <TextInputIconStartAdornment IconComponent={Search} />,
     placeholder: 'Search tokens...',
     clearButtonMode: 'never',
+    keyboardType: 'default',
   },
 };
