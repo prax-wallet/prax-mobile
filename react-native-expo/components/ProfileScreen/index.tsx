@@ -8,10 +8,13 @@ import ListItem from '../ListItem';
 import AssetIcon from '../AssetIcon';
 import ListItemChevronRightSuffix from '../ListItemChevronRightSuffix';
 import { useRouter } from 'expo-router';
+import { useAppSelector } from '@/store/hooks';
 
 export default function ProfileScreen() {
   const { t } = useLingui();
   const router = useRouter();
+  const grpcEndpoint = useAppSelector(state => state.secureStore.grpcEndpoint);
+  const defaultPaymentToken = useAppSelector(state => state.secureStore.defaultPaymentToken);
 
   return (
     <View sx={sx.root}>
@@ -40,7 +43,7 @@ export default function ProfileScreen() {
         <ListItem
           avatar={<AssetIcon />}
           primaryText={t`Default payment token`}
-          secondaryText='USDC'
+          secondaryText={defaultPaymentToken}
           suffix={<ListItemChevronRightSuffix />}
           onPress={() => router.navigate('/profile/defaultPaymentToken')}
         />
@@ -48,7 +51,7 @@ export default function ProfileScreen() {
         <ListItem
           avatar={<AssetIcon />}
           primaryText={t`RPC`}
-          secondaryText='https://snoqualmie.plinfra.net/'
+          secondaryText={grpcEndpoint}
           suffix={<ListItemChevronRightSuffix />}
         />
       </List>
