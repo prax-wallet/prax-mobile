@@ -14,13 +14,17 @@ import React from 'react';
 import './fonts.css';
 import { Provider } from 'react-redux';
 
-const mockStore = configureStore({ reducer: rootReducer });
+/**
+ * For Storybook, we use a simplified version of the Redux store which doesn't
+ * include e.g., `redux-persist`.
+ */
+const store = configureStore({ reducer: rootReducer });
 
 const preview: Preview = {
   decorators: [
     Story => (
       <PraxI18nProvider>
-        <Provider store={mockStore}>
+        <Provider store={store}>
           <DripsyProvider theme={dripsyTheme}>
             <Story />
           </DripsyProvider>
