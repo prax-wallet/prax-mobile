@@ -1,5 +1,5 @@
 import { ChevronRight } from 'lucide-react-native';
-import Icon from '../Icon';
+import ListItemIconSuffix from '../ListItemIconSuffix';
 
 /**
  * Many `<ListItem />`s have a right-pointing chevron to indicate they can be
@@ -8,5 +8,5 @@ import Icon from '../Icon';
  * `suffix` prop.
  */
 export default function ListItemChevronRightSuffix() {
-  return <Icon IconComponent={ChevronRight} size='md' color='neutralLight' />;
+  return <ListItemIconSuffix IconComponent={ChevronRight} />;
 }
