@@ -8,8 +8,9 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setDefaultPaymentToken } from '@/store/secureStore';
 import { Trans } from '@lingui/react/macro';
 import { Sx, Text, View } from 'dripsy';
-import { Check } from 'lucide-react-native';
+import { Check, Search } from 'lucide-react-native';
 import useFilteredAssets from './useFilteredAssets';
+import TextInputIconStartAdornment from '@/components/TextInputIconStartAdornment';
 
 export default function DefaultPaymentTokenScreen() {
   const defaultPaymentToken = useAppSelector(state => state.secureStore.defaultPaymentToken);
@@ -23,7 +24,13 @@ export default function DefaultPaymentTokenScreen() {
         <Trans>Default payment token</Trans>
       </Text>
 
-      <TextInput value={searchText} onChangeText={text => dispatch(setSearchText(text))} />
+      <TextInput
+        value={searchText}
+        onChangeText={text => dispatch(setSearchText(text))}
+        startAdornment={<TextInputIconStartAdornment IconComponent={Search} />}
+        placeholder='Search tokens...'
+        clearButtonMode='always'
+      />
 
       <List>
         {filteredAssets.map(asset => (
