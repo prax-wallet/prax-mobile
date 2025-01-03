@@ -1,5 +1,5 @@
-import GRPCScreen from '@/components/ProfileScreen/GRPCScreen';
+import GrpcScreen from '@/components/ProfileScreen/GrpcScreen';
 
-export default function GRPCRoute() {
-  return <GRPCScreen />;
+export default function GrpcRoute() {
+  return <GrpcScreen />;
 }

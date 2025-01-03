@@ -1,5 +1,5 @@
-import { EntityMetadata } from '@penumbra-labs/registry';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ChainRegistryClient, EntityMetadata } from '@penumbra-labs/registry';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 /** State specific to `GrpcScreen`. */
 export interface GrpcScreenState {
@@ -45,5 +45,21 @@ export const grpcScreenSlice = createSlice({
 
 export const { setGrpcEndpointInput, setIsLoading, setError, setGrpcEndpoints } =
   grpcScreenSlice.actions;
+
+export const loadGrpcEndpoints = createAsyncThunk(
+  'grpcScreen/loadGrpcEndpoints',
+  async (_, thunkApi) => {
+    thunkApi.dispatch(setIsLoading(true));
+
+    try {
+      const { rpcs } = await new ChainRegistryClient().remote.globals();
+      thunkApi.dispatch(setGrpcEndpoints(rpcs));
+    } catch (e) {
+      thunkApi.dispatch(setError(e));
+    } finally {
+      thunkApi.dispatch(setIsLoading(false));
+    }
+  },
+);
 
 export default grpcScreenSlice.reducer;

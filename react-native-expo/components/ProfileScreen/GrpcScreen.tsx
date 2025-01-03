@@ -3,23 +3,26 @@ import Box from '@/components/Box';
 import List from '@/components/List';
 import ListItem from '@/components/ListItem';
 import TextInput from '@/components/TextInput';
-import { setGrpcEndpointInput } from '@/store/grpcScreen';
+import { loadGrpcEndpoints, setGrpcEndpointInput } from '@/store/grpcScreen';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setGrpcEndpoint } from '@/store/secureStore';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Sx, Text, View } from 'dripsy';
-import useLoadGrpcEndpoints from './useLoadGrpcEndpoints';
 import ListItemIconSuffix from '@/components/ListItemIconSuffix';
 import { Check } from 'lucide-react-native';
+import { useEffect } from 'react';
 
-export default function GRPCScreen() {
+export default function GrpcScreen() {
   const { t } = useLingui();
   const grpcEndpoint = useAppSelector(state => state.secureStore.grpcEndpoint);
   const grpcEndpoints = useAppSelector(state => state.grpcScreen.grpcEndpoints);
   const grpcEndpointInput = useAppSelector(state => state.grpcScreen.grpcEndpointInput);
   const isCustomGrpcEndpoint = !grpcEndpoints.some(endpoint => endpoint.url === grpcEndpoint);
   const dispatch = useAppDispatch();
-  useLoadGrpcEndpoints();
+
+  useEffect(() => {
+    dispatch(loadGrpcEndpoints());
+  }, [dispatch]);
 
   return (
     <View sx={sx.root}>
