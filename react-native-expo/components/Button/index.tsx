@@ -34,7 +34,11 @@ export default function Button({
       onPress={onPress}
       disabled={disabled}
     >
-      <Text variant='button' sx={actionType === 'accent' ? sx.textAccent : sx.textDefault}>
+      <Text
+        variant='button'
+        sx={actionType === 'accent' ? sx.textAccent : sx.textDefault}
+        numberOfLines={1}
+      >
         {children}
       </Text>
     </Pressable>

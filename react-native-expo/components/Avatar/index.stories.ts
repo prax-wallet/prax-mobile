@@ -12,5 +12,6 @@ export default meta;
 export const Primary: StoryObj<typeof Avatar> = {
   args: {
     username: 'henry',
+    size: 'sm',
   },
 };
