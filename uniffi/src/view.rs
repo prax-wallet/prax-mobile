@@ -1,13 +1,17 @@
-use crate::{structs::*, APP_STATE, ENDPOINT};
+use crate::{structs::*, APP_STATE};
 use anyhow::Result;
+use penumbra_asset::{Value, STAKING_TOKEN_ASSET_ID};
 use penumbra_keys::test_keys;
-use penumbra_proto::box_grpc_svc::{self, BoxGrpcService};
+use penumbra_proto::box_grpc_svc::BoxGrpcService;
+use penumbra_proto::view::v1::transaction_planner_request as tpr;
 use penumbra_proto::view::v1::view_service_client::ViewServiceClient;
-use penumbra_proto::view::v1::view_service_server::ViewServiceServer;
-use penumbra_proto::view::v1::{TransparentAddressRequest, TransparentAddressResponse};
+use penumbra_proto::view::v1::{
+    TransactionPlannerRequest, TransactionPlannerResponse, TransparentAddressRequest,
+    TransparentAddressResponse,
+};
 use penumbra_view::ViewServer;
+use std::ops::Deref;
 use std::sync::Arc;
-use tokio::sync::Mutex;
 
 /// Generic async function that encapsulates common view server operations.
 pub async fn handle_view_server_call() -> Result<Arc<ViewServer>, AppError> {
@@ -69,64 +73,14 @@ where
 /// Requests the latest block height from the grpc endpoint.
 #[uniffi::export(async_runtime = "tokio")]
 pub async fn get_block_height() -> Result<u64, AppError> {
-    // `ViewServer` initializes grpc client and sends a grpc request to the tendermint
-    // proxy service.
-
     let view_server_handle = handle_view_server_call().await?;
 
+    // `ViewServer` initializes grpc client and sends a grpc request to the tendermint
+    // proxy service.
     match view_server_handle.latest_known_block_height().await {
         Ok(height) => Ok(height.0),
         Err(e) => Err(AppError::ViewServer(e.to_string())),
     }
-}
-
-/// Initializes and starts the View Server.
-#[uniffi::export(async_runtime = "tokio")]
-pub async fn start_server() -> Result<bool, AppError> {
-    let state = APP_STATE
-        .get()
-        .ok_or("app state not initialized")
-        .expect("starting server");
-
-    let view_server = match ViewServer::load_or_initialize(
-        None::<&str>,
-        None::<&str>,
-        &penumbra_keys::test_keys::FULL_VIEWING_KEY,
-        ENDPOINT.parse().unwrap(),
-    )
-    .await
-    {
-        Ok(vs) => vs,
-        Err(e) => return Err(AppError::ViewServer(e.to_string())),
-    };
-
-    // Acquire exclusive write lock and saves keys and server state.
-    let mut state = state.state.write().await;
-    state.spend_key = Some(test_keys::SPEND_KEY.clone());
-    state.full_viewing_key = Some(test_keys::FULL_VIEWING_KEY.clone());
-    state.view_server = Some(Arc::new(view_server.clone()));
-
-    // Creates grpc service and client synchronously.
-    let vs_tonic = ViewServiceServer::from_arc(view_server.clone().into());
-    let vsc = ViewServiceClient::new(box_grpc_svc::local(vs_tonic.clone()));
-    state.view_service_client = Some(Arc::new(Mutex::new(vsc.into())));
-
-    // Spawns async task for server.
-    tokio::spawn(async move {
-        let server = tonic::transport::Server::builder()
-            .accept_http1(true)
-            .add_service(tonic_web::enable(vs_tonic))
-            .serve("127.0.0.1:3333".parse().unwrap());
-
-        if let Err(e) = server.await {
-            eprintln!("error running tonic server: {}", e);
-            Err(format!("error running tonic server: {}", e))
-        } else {
-            Ok(())
-        }
-    });
-
-    Ok(true)
 }
 
 /// Retrieves a transparent address from the `ViewServiceClient`.
@@ -156,9 +110,57 @@ pub async fn transparent_address() -> Result<Vec<u8>, AppError> {
     Ok(address.inner)
 }
 
+pub fn transaction_planner_inner(
+    client: &mut ViewServiceClient<BoxGrpcService>,
+) -> Result<TransactionPlannerResponse, AppError> {
+    let rt = tokio::runtime::Runtime::new()
+        .map_err(|e| AppError::General(format!("failed to create runtime: {e}")))?;
+
+    let fut = client.transaction_planner(TransactionPlannerRequest {
+        outputs: vec![tpr::Output {
+            address: Some(test_keys::ADDRESS_1.deref().clone().into()),
+            value: Some(
+                Value {
+                    amount: 1_000_000u64.into(),
+                    asset_id: *STAKING_TOKEN_ASSET_ID,
+                }
+                .into(),
+            ),
+        }],
+        spends: vec![tpr::Spend {
+            address: Some(test_keys::ADDRESS_0.deref().clone().into()),
+            value: Some(
+                Value {
+                    amount: 2_000_000u64.into(),
+                    asset_id: *STAKING_TOKEN_ASSET_ID,
+                }
+                .into(),
+            ),
+        }],
+        ..Default::default()
+    });
+
+    let response = rt
+        .block_on(fut)
+        .map_err(|status| AppError::ViewServer(status.to_string()))?
+        .into_inner();
+
+    Ok(response)
+}
+
+#[uniffi::export(async_runtime = "tokio")]
+pub async fn transaction_planner() -> Result<(), AppError> {
+    let result: TransactionPlannerResponse = handle_view_client_call(transaction_planner_inner).await?;
+
+    todo!()
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::{create_app_state_container, get_block_height, start_server, transparent_address};
+    use crate::{
+        create_app_state_container, get_block_height, start_server, sync, transaction_planner,
+        transparent_address,
+    };
 
     #[tokio::test]
     async fn test_view_server_initialization_and_height() {
@@ -168,9 +170,14 @@ mod tests {
 
         start_server().await.expect("failed to start server");
 
+        // Sync 10k block from chain
+        let _ = sync().await;
+
         let block_height = get_block_height().await;
         match block_height {
-            Ok(_block_height) => {}
+            Ok(_block_height) => {
+                println!("block height: {:?}", block_height);
+            }
             Err(e) => {
                 panic!("failed to retrieve block height: {:?}", e);
             }
@@ -183,6 +190,16 @@ mod tests {
             }
             Err(e) => {
                 panic!("failed to retrieve transparent address: {:?}", e);
+            }
+        }
+
+        let transaction_planner = transaction_planner().await;
+        match transaction_planner {
+            Ok(transaction_planner) => {
+                println!("transaction planner: {:?}", transaction_planner);
+            }
+            Err(e) => {
+                panic!("failed to retrieve transaction planner: {:?}", e);
             }
         }
     }
