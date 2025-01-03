@@ -22,5 +22,7 @@ export const Basic: StoryObj<typeof TextInput> = {
     placeholder: 'Search tokens...',
     clearButtonMode: 'never',
     keyboardType: 'default',
+    autoCorrect: true,
+    autoCapitalize: 'sentences',
   },
 };

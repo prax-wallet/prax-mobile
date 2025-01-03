@@ -53,6 +53,7 @@ export default function ProfileScreen() {
           primaryText={t`RPC`}
           secondaryText={grpcEndpoint}
           suffix={<ListItemChevronRightSuffix />}
+          onPress={() => router.navigate('/profile/grpc')}
         />
       </List>
 
