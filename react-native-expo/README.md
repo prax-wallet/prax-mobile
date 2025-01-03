@@ -182,3 +182,9 @@ We use [Redux](https://redux.js.org/) for state management in Prax Mobile, along
 ### Typed hooks
 
 To use `redux-react`'s `useSelector` and `useDispatch` hooks, do not import them directly. Instead, import the typed versions from `@/store/hooks`, which are bound to our store's TypeScript types.
+
+### The `secureStore` slice
+
+You can use the `secureStore` slice in Redux like any other state slice, but note that all data in `secureStore` will be persisted to encrypted on-device storage, which persists between device and app restarts. So, only store data in that slice that is meant to be persisted, such as private keys, user preferences, etc. (Note that we use secure storage regardless of the sensitivity of the data. So, both the user's full viewing key and the user's default payment token are stored in encrypted storage.)
+
+The slice can be consumed and updated just like any other slice (via `useAppSelector()` and `useAppDispatch()`), and can have its shape modified just like any other slice (in `store/secureStore.ts`). The persistence is accomplished via [`redux-persist`](https://github.com/rt2zz/redux-persist) and [redux-persist-expo-securestore](https://github.com/Cretezy/redux-persist-expo-securestore), using [Expo SecureStore](https://docs.expo.dev/versions/latest/sdk/securestore/) under the hood. See `store/index.ts` to see how it's configured.
