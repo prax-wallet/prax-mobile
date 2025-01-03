@@ -1,6 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
 import balances from './balances';
+import defaultPaymentTokenScreen from './defaultPaymentTokenScreen';
 import depositFlow from './depositFlow';
 import portfolioScreen from './portfolioScreen';
 import secureStore from './secureStore';
@@ -14,6 +15,7 @@ import transactions from './transactions';
  */
 const rootReducer = combineReducers({
   balances,
+  defaultPaymentTokenScreen,
   depositFlow,
   portfolioScreen,
   secureStore,
