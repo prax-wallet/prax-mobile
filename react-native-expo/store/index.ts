@@ -1,20 +1,8 @@
 import createSecureStore from 'redux-persist-expo-securestore';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer } from 'redux-persist';
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 
-import balances from './balances';
-import depositFlow from './depositFlow';
-import portfolioScreen from './portfolioScreen';
-import secureStore from './secureStore';
-import transactions from './transactions';
-
-const rootReducer = combineReducers({
-  balances,
-  depositFlow,
-  portfolioScreen,
-  secureStore,
-  transactions,
-});
+import rootReducer from './rootReducer';
 
 const store = configureStore({
   reducer: persistReducer(
