@@ -19,5 +19,7 @@ export default meta;
 export const Basic: StoryObj<typeof TextInput> = {
   args: {
     startAdornment: <TextInputIconStartAdornment IconComponent={Search} />,
+    placeholder: 'Search tokens...',
+    clearButtonMode: 'never',
   },
 };
