@@ -1904,6 +1904,11 @@
   dependencies:
     semver "^7.3.5"
 
+"@penumbra-labs/registry@^12.0.0":
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/@penumbra-labs/registry/-/registry-12.0.0.tgz#824c0b9c167495b0404562e9f1eb9656a15a8e8d"
+  integrity sha512-fQ4onHovusiOZL2nhoCoEo+/sQovK9NAQmNvehIw7Q0dhw9InXIZBTUSOKujhvyrcca+vA9FsaHWr0DSv/pDsw==
+
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"

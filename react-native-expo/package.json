@@ -28,6 +28,7 @@
     "@expo/vector-icons": "^14.0.2",
     "@lingui/core": "^5.1.2",
     "@lingui/react": "^5.1.2",
+    "@penumbra-labs/registry": "^12.0.0",
     "@react-navigation/bottom-tabs": "^7.0.0",
     "@react-navigation/native": "^7.0.0",
     "@reduxjs/toolkit": "^2.5.0",

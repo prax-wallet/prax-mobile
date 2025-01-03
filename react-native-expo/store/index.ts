@@ -7,8 +7,9 @@ import rootReducer from './rootReducer';
 const store = configureStore({
   reducer: persistReducer(
     {
-      key: 'secureStore',
+      key: 'reduxState',
       storage: createSecureStore(),
+      whitelist: ['secureStore'],
     },
     rootReducer,
   ),

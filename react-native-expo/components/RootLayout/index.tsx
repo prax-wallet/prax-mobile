@@ -29,6 +29,10 @@ export default function RootLayout() {
                   name='profile/defaultPaymentToken'
                   options={{ header: () => <BackButtonHeader /> }}
                 />
+                <Stack.Screen
+                  name='profile/grpc'
+                  options={{ header: () => <BackButtonHeader /> }}
+                />
 
                 <Stack.Screen
                   name='transactions'
