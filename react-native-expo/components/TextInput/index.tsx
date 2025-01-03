@@ -1,5 +1,5 @@
-import { TextInput as DripsyTextInput, Sx, View } from 'dripsy';
-import { ReactNode } from 'react';
+import { TextInput as DripsyTextInput, Sx, useSx, View } from 'dripsy';
+import { ComponentProps, ReactNode } from 'react';
 
 export interface TextInputProps {
   value?: string;
@@ -11,17 +11,37 @@ export interface TextInputProps {
    * field.
    */
   startAdornment?: ReactNode;
+  placeholder?: string;
+  /**
+   * When the clear button should appear on the right side of the text input.
+   */
+  clearButtonMode?: ComponentProps<typeof DripsyTextInput>['clearButtonMode'];
 }
 
 /**
  * Wraps React Native's `<TextInput />`, while adding Prax styles.
  */
-export default function TextInput({ value, onChangeText, startAdornment }: TextInputProps) {
+export default function TextInput({
+  value,
+  onChangeText,
+  startAdornment,
+  placeholder,
+  clearButtonMode,
+}: TextInputProps) {
+  const placeholderTextColor = useSx()({ color: 'neutralLight' }).color;
+
   return (
     <View sx={sx.root}>
       {startAdornment}
 
-      <DripsyTextInput sx={sx.textInput} value={value} onChangeText={onChangeText} />
+      <DripsyTextInput
+        sx={sx.textInput}
+        value={value}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+        placeholderTextColor={placeholderTextColor}
+        clearButtonMode={clearButtonMode}
+      />
     </View>
   );
 }
