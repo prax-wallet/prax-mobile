@@ -6,7 +6,7 @@ import TextInput from '@/components/TextInput';
 import { setSearchText } from '@/store/defaultPaymentTokenScreen';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setDefaultPaymentToken } from '@/store/secureStore';
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Sx, Text, View } from 'dripsy';
 import { Check, Search } from 'lucide-react-native';
 import useFilteredAssets from './useFilteredAssets';
@@ -17,6 +17,7 @@ export default function DefaultPaymentTokenScreen() {
   const dispatch = useAppDispatch();
   const searchText = useAppSelector(state => state.defaultPaymentTokenScreen.searchText);
   const filteredAssets = useFilteredAssets();
+  const { t } = useLingui();
 
   return (
     <View sx={sx.root}>
@@ -28,7 +29,7 @@ export default function DefaultPaymentTokenScreen() {
         value={searchText}
         onChangeText={text => dispatch(setSearchText(text))}
         startAdornment={<TextInputIconStartAdornment IconComponent={Search} />}
-        placeholder='Search tokens...'
+        placeholder={t`Search tokens...`}
         clearButtonMode='always'
       />
 
