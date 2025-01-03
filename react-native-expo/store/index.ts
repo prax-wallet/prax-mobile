@@ -7,8 +7,16 @@ import rootReducer from './rootReducer';
 const store = configureStore({
   reducer: persistReducer(
     {
+      /**
+       * The key under which this data will be stored in the device's encrypted
+       * storage.
+       */
       key: 'reduxState',
       storage: createSecureStore(),
+      /**
+       * The top-level keys of the Redux state that we want to persist. (In our
+       * case, it's just one: the `secureStore` slice.)
+       */
       whitelist: ['secureStore'],
     },
     rootReducer,
