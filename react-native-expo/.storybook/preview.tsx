@@ -1,26 +1,31 @@
+import { configureStore } from '@reduxjs/toolkit';
 import { DripsyProvider } from 'dripsy';
 import dripsyTheme from '../utils/dripsyTheme';
 import PraxI18nProvider from '../components/PraxI18nProvider';
+import rootReducer from '../store/rootReducer';
 import type { Preview } from '@storybook/react';
 import React from 'react';
-import ReduxProvider from '../components/ReduxProvider';
+
 /**
  * Ideally, we'd use `<FontProvider />` in the root decorator to provide fonts
  * to Storybook. But that caused weird import issues. So for now, we'll just add
  * an `@font-face` CSS file to make our fonts work.
  */
 import './fonts.css';
+import { Provider } from 'react-redux';
+
+const mockStore = configureStore({ reducer: rootReducer });
 
 const preview: Preview = {
   decorators: [
     Story => (
-      <ReduxProvider>
-        <PraxI18nProvider>
+      <PraxI18nProvider>
+        <Provider store={mockStore}>
           <DripsyProvider theme={dripsyTheme}>
             <Story />
           </DripsyProvider>
-        </PraxI18nProvider>
-      </ReduxProvider>
+        </Provider>
+      </PraxI18nProvider>
     ),
   ],
   parameters: {
