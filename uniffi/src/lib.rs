@@ -1,10 +1,12 @@
 #![recursion_limit = "256"]
 
 pub mod custody;
+pub mod keys;
 pub mod structs;
 pub mod sync;
 pub mod view;
 
+pub use keys::*;
 pub use structs::*;
 pub use sync::*;
 pub use view::*;
@@ -60,7 +62,7 @@ pub async fn create_app_state_container() -> Result<bool, AppError> {
 
 /// Initializes the app state and view and custody services.
 #[uniffi::export(async_runtime = "tokio")]
-pub async fn start_server() -> Result<bool, AppError> {
+pub async fn start_server(db_path: String) -> Result<bool, AppError> {
     let state = APP_STATE
         .get()
         .ok_or("app state not initialized")
@@ -68,7 +70,7 @@ pub async fn start_server() -> Result<bool, AppError> {
 
     // Build view and custody services.
     let view_server = match ViewServer::load_or_initialize(
-        None::<&str>, // TODO: supply storage path to SQLite Expo database.
+        Some(db_path), // TODO: supply storage path to SQLite Expo database.
         None::<&str>,
         &penumbra_keys::test_keys::FULL_VIEWING_KEY,
         ENDPOINT.parse().unwrap(),
