@@ -1,6 +1,13 @@
 import { useAppSelector } from '@/store/hooks';
-import ASSETS from './assets';
+import { PENUMBRA_CHAIN_ID } from '@/utils/constants';
+import { ChainRegistryClient } from '@penumbra-labs/registry';
 import { useMemo } from 'react';
+
+/**
+ * @todo: Use remote client? (To avoid having to update the app just to get the
+ * latest metadatas.)
+ */
+const ALL_METADATAS = new ChainRegistryClient().bundled.get(PENUMBRA_CHAIN_ID).getAllAssets();
 
 /**
  * Returns asset types filtered by the search text from state.
@@ -14,11 +21,11 @@ export default function useFilteredAssets() {
 
   const filteredAssets = useMemo(
     () =>
-      ASSETS.filter(asset => {
+      ALL_METADATAS.filter(metadata => {
         const searchTextLowerCase = searchText.toLocaleLowerCase();
 
-        if (asset.name.toLocaleLowerCase().includes(searchTextLowerCase)) return true;
-        if (asset.symbol.toLocaleLowerCase().includes(searchTextLowerCase)) return true;
+        if (metadata.name.toLocaleLowerCase().includes(searchTextLowerCase)) return true;
+        if (metadata.symbol.toLocaleLowerCase().includes(searchTextLowerCase)) return true;
 
         return false;
       }),
