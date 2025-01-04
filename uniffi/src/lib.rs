@@ -3,12 +3,10 @@
 pub mod custody;
 pub mod keys;
 pub mod structs;
-pub mod sync;
 pub mod view;
 
 pub use keys::*;
 pub use structs::*;
-pub use sync::*;
 pub use view::*;
 
 use anyhow::Result;

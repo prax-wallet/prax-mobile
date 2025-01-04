@@ -18,7 +18,7 @@ use penumbra_proto::view::v1::{
 };
 use penumbra_proto::{DomainType, Message};
 use penumbra_transaction::{Transaction, TransactionPlan};
-use penumbra_view::ViewServer;
+use penumbra_view::{ViewClient, ViewServer};
 use std::ops::Deref;
 use std::sync::Arc;
 use tonic::Streaming;
@@ -78,6 +78,59 @@ where
     })
     .await
     .map_err(|e| AppError::General(format!("spawn_blocking error: {e}")))?
+}
+
+pub fn sync_inner(client: &mut ViewServiceClient<BoxGrpcService>) -> Result<(), AppError> {
+    let rt = tokio::runtime::Runtime::new()
+        .map_err(|e| AppError::General(format!("failed to create runtime: {e}")))?;
+
+    rt.block_on(async {
+        let mut status_stream = ViewClient::status_stream(client).await.expect("sync");
+
+        let initial_status = status_stream
+            .next()
+            .await
+            .transpose()
+            .expect("sync")
+            .ok_or_else(|| anyhow::anyhow!("view service did not report sync status"))
+            .expect("sync");
+
+        eprintln!(
+            "Scanning blocks from last sync height {} to latest height {}",
+            initial_status.full_sync_height, initial_status.latest_known_block_height,
+        );
+
+        let max_blocks_to_sync = 10_000;
+        let blocks_to_sync = std::cmp::min(
+            initial_status.latest_known_block_height - initial_status.full_sync_height,
+            max_blocks_to_sync,
+        );
+
+        use indicatif::{ProgressBar, ProgressDrawTarget, ProgressStyle};
+        let progress_bar =
+            ProgressBar::with_draw_target(blocks_to_sync, ProgressDrawTarget::stdout()).with_style(
+                ProgressStyle::default_bar().template(
+                    "[{elapsed}] {bar:50.cyan/blue} {pos:>7}/{len:7} {per_sec} ETA: {eta}",
+                ),
+            );
+        progress_bar.set_position(0);
+
+        while let Some(status) = status_stream.next().await.transpose().expect("sync") {
+            if status.full_sync_height - initial_status.full_sync_height >= blocks_to_sync {
+                break;
+            }
+            progress_bar.set_position(status.full_sync_height - initial_status.full_sync_height);
+        }
+        progress_bar.finish();
+
+        Ok(())
+    })
+}
+
+/// Syncing mechaism.
+#[uniffi::export(async_runtime = "tokio")]
+pub async fn sync() -> Result<(), AppError> {
+    handle_view_client_call(sync_inner).await
 }
 
 /// Requests the latest block height from the grpc endpoint.
@@ -249,8 +302,8 @@ mod tests {
     };
 
     use crate::{
-        create_app_state_container, custody::authorize, start_server, sync, transaction_planner,
-        witness_and_build,
+        create_app_state_container, custody::authorize, start_server, transaction_planner,
+        view::sync, witness_and_build,
     };
 
     #[tokio::test]
@@ -259,9 +312,10 @@ mod tests {
             .await
             .expect("failed to create app state container");
 
-        start_server().await.expect("failed to start server");
+        start_server("".to_string())
+            .await
+            .expect("failed to start server");
 
-        // Sync the chain
         let _ = sync().await;
 
         let transaction_planner_result = transaction_planner()
