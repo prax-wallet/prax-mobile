@@ -21,8 +21,7 @@ pub async fn sync() -> Result<()> {
     let view_service_client = &mut *view_service_client_guard;
     let mut status_stream = ViewClient::status_stream(view_service_client).await?;
 
-    // Pull out the first message from the stream, which has the current state, and use
-    // it to set up a progress bar.
+    // Pull out the first message to initialize the progress bar
     let initial_status = status_stream
         .next()
         .await
@@ -34,27 +33,34 @@ pub async fn sync() -> Result<()> {
         initial_status.full_sync_height, initial_status.latest_known_block_height,
     );
 
-    let max_blocks_to_sync = 10_000;
-    let blocks_to_sync = std::cmp::min(
-        initial_status.latest_known_block_height - initial_status.full_sync_height,
-        max_blocks_to_sync,
+    use indicatif::{ProgressBar, ProgressStyle};
+
+    // Progress bar starts with the known range
+    let total_blocks = initial_status.latest_known_block_height - initial_status.full_sync_height;
+    let progress_bar = ProgressBar::new(total_blocks as u64).with_style(
+        ProgressStyle::default_bar()
+            .template("[{elapsed}] {bar:50.cyan/blue} {pos:>7}/{len:7} {per_sec} ETA: {eta}"),
     );
 
-    use indicatif::{ProgressBar, ProgressDrawTarget, ProgressStyle};
-    let progress_bar = ProgressBar::with_draw_target(blocks_to_sync, ProgressDrawTarget::stdout())
-        .with_style(
-            ProgressStyle::default_bar()
-                .template("[{elapsed}] {bar:50.cyan/blue} {pos:>7}/{len:7} {per_sec} ETA: {eta}"),
-        );
     progress_bar.set_position(0);
 
-    while let Some(status) = status_stream.next().await.transpose()? {
-        if status.full_sync_height - initial_status.full_sync_height >= blocks_to_sync {
-            break;
-        }
-        progress_bar.set_position(status.full_sync_height - initial_status.full_sync_height);
-    }
-    progress_bar.finish();
+    let mut last_synced_height = initial_status.full_sync_height;
 
+    while let Some(status) = status_stream.next().await.transpose()? {
+        // Update progress bar as new blocks are synced
+        let synced_blocks = status.full_sync_height - last_synced_height;
+        progress_bar.inc(synced_blocks as u64);
+
+        last_synced_height = status.full_sync_height;
+
+        // Dynamically adjust progress bar length if more blocks are discovered
+        if status.latest_known_block_height > last_synced_height {
+            let new_total_blocks =
+                status.latest_known_block_height - initial_status.full_sync_height;
+            progress_bar.set_length(new_total_blocks as u64);
+        }
+    }
+
+    progress_bar.finish();
     Ok(())
 }

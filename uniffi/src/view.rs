@@ -1,17 +1,27 @@
 use crate::{structs::*, APP_STATE};
 use anyhow::Result;
+use futures::StreamExt;
 use penumbra_asset::{Value, STAKING_TOKEN_ASSET_ID};
 use penumbra_keys::test_keys;
 use penumbra_proto::box_grpc_svc::BoxGrpcService;
-use penumbra_proto::view::v1::transaction_planner_request as tpr;
+use penumbra_proto::core::transaction::v1::{
+    AuthorizationData as AuthorizationDataProto, TransactionPlan as TransactionPlanProto,
+};
 use penumbra_proto::view::v1::view_service_client::ViewServiceClient;
+use penumbra_proto::view::v1::witness_and_build_response::Status;
+use penumbra_proto::view::v1::{
+    transaction_planner_request as tpr, WitnessAndBuildRequest, WitnessAndBuildResponse,
+};
 use penumbra_proto::view::v1::{
     TransactionPlannerRequest, TransactionPlannerResponse, TransparentAddressRequest,
     TransparentAddressResponse,
 };
+use penumbra_proto::{DomainType, Message};
+use penumbra_transaction::{Transaction, TransactionPlan};
 use penumbra_view::ViewServer;
 use std::ops::Deref;
 use std::sync::Arc;
+use tonic::Streaming;
 
 /// Generic async function that encapsulates common view server operations.
 pub async fn handle_view_server_call() -> Result<Arc<ViewServer>, AppError> {
@@ -116,6 +126,7 @@ pub fn transaction_planner_inner(
     let rt = tokio::runtime::Runtime::new()
         .map_err(|e| AppError::General(format!("failed to create runtime: {e}")))?;
 
+    // Temporary: dummy transaction planner request.
     let fut = client.transaction_planner(TransactionPlannerRequest {
         outputs: vec![tpr::Output {
             address: Some(test_keys::ADDRESS_1.deref().clone().into()),
@@ -149,58 +160,130 @@ pub fn transaction_planner_inner(
 }
 
 #[uniffi::export(async_runtime = "tokio")]
-pub async fn transaction_planner() -> Result<(), AppError> {
-    let result: TransactionPlannerResponse = handle_view_client_call(transaction_planner_inner).await?;
+pub async fn transaction_planner() -> Result<Vec<u8>, AppError> {
+    let result: TransactionPlannerResponse =
+        handle_view_client_call(transaction_planner_inner).await?;
 
-    todo!()
+    let transaction_plan: TransactionPlan =
+        result.plan.unwrap().try_into().expect("transaction plan");
+
+    Ok(transaction_plan.encode_to_vec())
+}
+
+pub fn witness_and_build_inner(
+    plan: TransactionPlanProto,
+    auth_data: AuthorizationDataProto,
+    client: &mut ViewServiceClient<BoxGrpcService>,
+) -> Result<Streaming<WitnessAndBuildResponse>, AppError> {
+    let rt = tokio::runtime::Runtime::new()
+        .map_err(|e| AppError::General(format!("failed to create runtime: {e}")))?;
+
+    let fut = client.witness_and_build(WitnessAndBuildRequest {
+        transaction_plan: Some(plan),
+        authorization_data: Some(auth_data),
+    });
+
+    let response = rt
+        .block_on(fut)
+        .map_err(|status| AppError::ViewServer(status.to_string()))?
+        .into_inner();
+
+    Ok(response)
+}
+
+#[uniffi::export(async_runtime = "tokio")]
+pub async fn witness_and_build(
+    transaction_plan: &[u8],
+    authorization_data: &[u8],
+) -> Result<Vec<u8>, AppError> {
+    let plan: TransactionPlanProto = TransactionPlanProto::decode(transaction_plan)
+        .map_err(|e| AppError::General(format!("failed to decode TransactionPlan: {e}")))?;
+    let auth_data: AuthorizationDataProto = AuthorizationDataProto::decode(authorization_data)
+        .map_err(|e| AppError::General(format!("failed to decode AuthorizationData: {e}")))?;
+
+    let mut result =
+        handle_view_client_call(|client| witness_and_build_inner(plan, auth_data, client)).await?;
+
+    let mut final_response: Option<WitnessAndBuildResponse> = None;
+
+    while let Some(response) = result.next().await {
+        match response {
+            Ok(witness_and_build_response) => {
+                final_response = Some(witness_and_build_response);
+            }
+            Err(e) => {
+                return Err(AppError::General(format!(
+                    "Error receiving stream response: {}",
+                    e
+                )));
+            }
+        }
+    }
+
+    // Extracts transaction from the stream for now.
+    let transaction = if let Some(status) = final_response.unwrap().status {
+        if let Status::Complete(complete) = status {
+            complete.transaction
+        } else {
+            return Err(AppError::General("stream is not complete".to_string()));
+        }
+    } else {
+        return Err(AppError::General(
+            "no status found in the stream".to_string(),
+        ));
+    };
+
+    let transaction: Transaction = transaction
+        .unwrap()
+        .try_into()
+        .expect("fully-formed transaction");
+
+    Ok(transaction.encode_to_vec())
 }
 
 #[cfg(test)]
 mod tests {
+    use penumbra_proto::{
+        core::transaction::v1::{AuthorizationData, Transaction, TransactionPlan},
+        Message,
+    };
+
     use crate::{
-        create_app_state_container, get_block_height, start_server, sync, transaction_planner,
-        transparent_address,
+        create_app_state_container, custody::authorize, start_server, sync, transaction_planner,
+        witness_and_build,
     };
 
     #[tokio::test]
-    async fn test_view_server_initialization_and_height() {
+    async fn test_transaction_planner_and_proof_generation() {
         create_app_state_container()
             .await
             .expect("failed to create app state container");
 
         start_server().await.expect("failed to start server");
 
-        // Sync 10k block from chain
+        // Sync the chain
         let _ = sync().await;
 
-        let block_height = get_block_height().await;
-        match block_height {
-            Ok(_block_height) => {
-                println!("block height: {:?}", block_height);
-            }
-            Err(e) => {
-                panic!("failed to retrieve block height: {:?}", e);
-            }
-        }
+        let transaction_planner_result = transaction_planner()
+            .await
+            .expect("failed to query transaction planner");
 
-        let transparent_address = transparent_address().await;
-        match transparent_address {
-            Ok(transparent_address) => {
-                println!("transparent address: {:?}", transparent_address);
-            }
-            Err(e) => {
-                panic!("failed to retrieve transparent address: {:?}", e);
-            }
-        }
+        TransactionPlan::decode(&*transaction_planner_result)
+            .expect("failed to decode transaction plan");
 
-        let transaction_planner = transaction_planner().await;
-        match transaction_planner {
-            Ok(transaction_planner) => {
-                println!("transaction planner: {:?}", transaction_planner);
-            }
-            Err(e) => {
-                panic!("failed to retrieve transaction planner: {:?}", e);
-            }
-        }
+        let authorize_data_result = authorize(&transaction_planner_result)
+            .await
+            .expect("failed to query authorization data");
+
+        AuthorizationData::decode(&*authorize_data_result)
+            .expect("failed to decode authorization data");
+
+        let witness_and_build_result =
+            witness_and_build(&transaction_planner_result, &authorize_data_result)
+                .await
+                .expect("failed to query witness and build");
+
+        Transaction::decode(&*witness_and_build_result)
+            .expect("failed to decode witness and build data");
     }
 }
