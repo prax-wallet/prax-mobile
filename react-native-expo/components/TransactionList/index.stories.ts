@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import TransactionList from '.';
 import transactionFactory from '@/factories/transaction';
-import penumbraAddressFactory from '@/factories/penumbraAddress';
+import addressFactory from '@/factories/Address';
 
 const meta: Meta<typeof TransactionList> = {
   component: TransactionList,
@@ -20,18 +20,18 @@ export const Basic: StoryObj<typeof TransactionList> = {
     showTitle: true,
     transactions: [
       transactionFactory.build({
-        senderAddress: penumbraAddressFactory.build().value,
+        senderAddress: addressFactory.build().value,
         senderUsername: 'henry',
       }),
       transactionFactory.build({
         type: 'send',
-        recipientAddress: penumbraAddressFactory.build().value,
+        recipientAddress: addressFactory.build().value,
         recipientUsername: 'cate',
         via: undefined,
       }),
       transactionFactory.build({
         type: 'send',
-        recipientAddress: penumbraAddressFactory.build().value,
+        recipientAddress: addressFactory.build().value,
       }),
     ],
   },
