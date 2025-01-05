@@ -22,10 +22,10 @@ public class PenumbraSdkModule: Module {
       }
     }
 
-    AsyncFunction("startServer") { (promise: Promise) in
+    AsyncFunction("startServer") { (dbPath: String, promise: Promise) in
       Task {
         do {
-            let result = try await startServer()
+            let result = try await startServer(dbPath: dbPath)
             promise.resolve(result)
         } catch {
             promise.reject(error) 
@@ -37,6 +37,72 @@ public class PenumbraSdkModule: Module {
       Task {
         do {
             let result = try await getBlockHeight()
+            promise.resolve(result)
+        } catch {
+            promise.reject(error) 
+        }
+      }
+    }
+
+    AsyncFunction("transparentAddress") { (promise: Promise) in
+      Task {
+        do {
+            let result = try await transparentAddress()
+            promise.resolve(result)
+        } catch {
+            promise.reject(error) 
+        }
+      }
+    }
+
+    AsyncFunction("transactionPlanner") { (promise: Promise) in
+      Task {
+        do {
+            let result = try await transactionPlanner()
+            promise.resolve(result)
+        } catch {
+            promise.reject(error) 
+        }
+      }
+    }
+
+    AsyncFunction("authorize") { (planBytes: Data, promise: Promise) in
+      Task {
+        do {
+            let result = try await authorize(planBytes: planBytes)
+            promise.resolve(result)
+        } catch {
+            promise.reject(error) 
+        }
+      }
+    }
+
+    AsyncFunction("witnessAndBuild") { (transactionPlan: Data, authorizationData: Data, promise: Promise) in
+      Task {
+        do {
+            let result = try await witnessAndBuild(transactionPlan: transactionPlan, authorizationData: authorizationData)
+            promise.resolve(result)
+        } catch {
+            promise.reject(error) 
+        }
+      }
+    }
+
+    AsyncFunction("sync") { (promise: Promise) in
+      Task {
+        do {
+            let result = try await sync()
+            promise.resolve(result)
+        } catch {
+            promise.reject(error) 
+        }
+      }
+    }
+
+    AsyncFunction("loadLocalProvingKey") { (keyType: String, filePath: String, promise: Promise) in
+      Task {
+        do {
+            let result = try await loadLocalProvingKey(keyType: keyType, filePath: filePath)
             promise.resolve(result)
         } catch {
             promise.reject(error) 

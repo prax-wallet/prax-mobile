@@ -11,12 +11,35 @@ export function createAppStateContainer(): Promise<number> {
   return PenumbraSdkModule.createAppStateContainer();
 }
 
-export function startServer(): Promise<number> {
-  return PenumbraSdkModule.startServer();
+export function startServer(dbPath: String): Promise<number> {
+  return PenumbraSdkModule.startServer(dbPath);
 }
 
 export function getBlockHeight(): Promise<number> {
   return PenumbraSdkModule.getBlockHeight();
+}
+export function transparentAddress(): Promise<number[]> {
+  return PenumbraSdkModule.transparentAddress();
+}
+
+export function transactionPlanner(): Promise<Uint8Array> {
+  return PenumbraSdkModule.transactionPlanner();
+}
+
+export function authorize(planBytes: Uint8Array): Promise<Uint8Array> {
+  return PenumbraSdkModule.authorize(planBytes);
+}
+
+export function witnessAndBuild(transactionPlan: Uint8Array, authorizationData: Uint8Array): Promise<Uint8Array> {
+  return PenumbraSdkModule.witnessAndBuild(transactionPlan, authorizationData);
+}
+
+export function sync() {
+  return PenumbraSdkModule.sync();
+}
+
+export function loadLocalProvingKey(keyType: String, filePath: String): Promise<Uint8Array> {
+  return PenumbraSdkModule.loadLocalProvingKey(keyType, filePath);
 }
 
 export { ChangeEventPayload };
