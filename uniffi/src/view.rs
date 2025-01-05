@@ -312,9 +312,7 @@ mod tests {
             .await
             .expect("failed to create app state container");
 
-        start_server("".to_string())
-            .await
-            .expect("failed to start server");
+        start_server("").await.expect("failed to start server");
 
         let _ = sync().await;
 

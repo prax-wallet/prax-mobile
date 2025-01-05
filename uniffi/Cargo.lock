@@ -3254,6 +3254,7 @@ dependencies = [
  "anyhow",
  "async-runtime",
  "async-std",
+ "camino",
  "futures",
  "indicatif",
  "libc",

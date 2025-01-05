@@ -51,6 +51,7 @@ tap = "1.0.1"
 futures = "0.3.31"
 indicatif = "0.16"
 prost = "0.13.4"
+camino = "1.1.9"
 
 [dev-dependencies]
 penumbra-proof-params = { git = "https://github.com/penumbra-zone/penumbra.git", tag = "v0.81.0", package = "penumbra-proof-params", default-features = false, features = ["bundled-proving-keys", "download-proving-keys"] }

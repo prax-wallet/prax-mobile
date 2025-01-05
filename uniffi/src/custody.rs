@@ -78,6 +78,7 @@ pub fn authorize_inner(
     Ok(response)
 }
 
+/// Authorize a transaction plan.
 #[uniffi::export(async_runtime = "tokio")]
 pub async fn authorize(plan_bytes: &[u8]) -> Result<Vec<u8>, AppError> {
     let plan: TransactionPlan = TransactionPlan::decode(plan_bytes)

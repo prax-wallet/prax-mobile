@@ -10,6 +10,7 @@ pub use structs::*;
 pub use view::*;
 
 use anyhow::Result;
+use camino::Utf8PathBuf;
 use once_cell::sync::OnceCell;
 use penumbra_custody::soft_kms::SoftKms;
 use penumbra_keys::test_keys;
@@ -60,15 +61,17 @@ pub async fn create_app_state_container() -> Result<bool, AppError> {
 
 /// Initializes the app state and view and custody services.
 #[uniffi::export(async_runtime = "tokio")]
-pub async fn start_server(db_path: String) -> Result<bool, AppError> {
+pub async fn start_server(db_path: &str) -> Result<bool, AppError> {
     let state = APP_STATE
         .get()
         .ok_or("app state not initialized")
         .expect("starting server");
 
+    let utf8_path = Utf8PathBuf::from(db_path);
+
     // Build view and custody services.
     let view_server = match ViewServer::load_or_initialize(
-        Some(db_path), // TODO: supply storage path to SQLite Expo database.
+        Some(&utf8_path),
         None::<&str>,
         &penumbra_keys::test_keys::FULL_VIEWING_KEY,
         ENDPOINT.parse().unwrap(),
