@@ -18,12 +18,33 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
           cache-dependency-path: 'react-native-expo/yarn.lock'
-      - run: yarn install
+
+      - name: Restore cached Primes
+        id: restore-node-modules-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ./react-native-expo/node_modules
+          key: cache-node-modules-${{ hashFiles('react-native-expo/yarn.lock') }}
+
+      - name: Install Yarn dependencies
+        run: yarn install
+        if: steps.restore-node-modules-cache.outputs.cache-hit != 'true'
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        if: steps.restore-node-modules-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v4
+        with:
+          path: ./react-native-expo/node_modules
+          key: cache-node-modules-${{ hashFiles('react-native-expo/yarn.lock') }}
+
       - run: yarn lint
+
       - run: yarn test:ci
