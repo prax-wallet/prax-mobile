@@ -42,7 +42,17 @@ jobs:
           key: cache-node-modules-${{ hashFiles('react-native-expo/yarn.lock') }}
 
       - name: Ensure all translations are extracted and compiled
-        run: 'yarn extract && yarn compile && git add . && git diff --quiet && git diff --cached --quiet || (echo "Running \`yarn extract && yarn compile\` resulted in a dirty Git working tree. To fix this, run \`yarn extract && yarn compile\` locally, commit the results, and then push back up." && exit 1)'
+        # Thanks to https://stackoverflow.com/a/3878934/974981
+        run: |
+          yarn extract && \
+          yarn compile && \
+          git add . \
+          && git diff --quiet \
+          && git diff --cached --quiet || \
+          (\
+            echo "\033[0;31mRunning \`yarn extract && yarn compile\` resulted in a dirty Git working tree. To fix this, run \`yarn extract && yarn compile\` locally, commit the results, and then push back up." && \
+            exit 1\
+          )
 
       - name: Lint
         run: yarn lint
