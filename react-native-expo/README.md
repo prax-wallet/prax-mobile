@@ -195,6 +195,6 @@ The slice can be consumed and updated just like any other slice (via `useAppSele
 
 ## Weird issues/gotchas
 
-### Importing `@penumbra-zone/bech32m/penumbra`
+### Importing `@penumbra-zone/*` packages
 
-For some reason, although TypeScript and Storybook understand imports from `@penumbra-zone/bech32m/penumbra`, Expo does not, and expects the import to come from inside `dist`. This should be fixed; but in the meantime, `metro.config.cjs` temporarily patches these imports using an alias.
+For some reason, although TypeScript and Storybook understand imports from `@penumbra-zone/...`, Expo often does not, and expects the import to come from e.g., inside `dist/`. This should be fixed; but in the meantime, `metro.config.cjs` temporarily patches these imports using an alias.
