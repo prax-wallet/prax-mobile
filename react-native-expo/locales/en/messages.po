@@ -17,16 +17,28 @@ msgstr ""
 msgid "A Shielded IBC Deposit allows you to transfer assets (e.g., ATOM, OSMO) from Cosmos-based networks into Penumbra's shielded pool. Once deposited, your assets become private and anonymous, ensuring maximum confidentiality when used within Penumbra."
 msgstr "A Shielded IBC Deposit allows you to transfer assets (e.g., ATOM, OSMO) from Cosmos-based networks into Penumbra's shielded pool. Once deposited, your assets become private and anonymous, ensuring maximum confidentiality when used within Penumbra."
 
+#: components/ProfileScreen/index.tsx:36
+msgid "Address"
+msgstr "Address"
+
+#: components/ProfileScreen/index.tsx:68
+msgid "Advanced settings"
+msgstr "Advanced settings"
+
 #: components/TradeScreen/index.tsx:25
 msgid "Allow notifications"
 msgstr "Allow notifications"
 
-#: components/HomeScreen/index.tsx:19
+#: components/PortfolioScreen/BalanceList/index.tsx:17
+msgid "Assets"
+msgstr "Assets"
+
+#: components/BalanceAndActions/index.tsx:21
 msgid "Balance"
 msgstr "Balance"
 
 #: components/TradeScreen/index.tsx:15
-#: components/DepositFlow/DepositMethod.tsx:32
+#: components/DepositFlow/DepositMethod.tsx:31
 msgid "Coming soon"
 msgstr "Coming soon"
 
@@ -38,15 +50,28 @@ msgstr "Copied!"
 msgid "Copy IBC address"
 msgstr "Copy IBC address"
 
-#: components/HomeScreen/index.tsx:26
+#: components/ProfileScreen/GrpcScreen.tsx:35
+msgid "Custom RPC"
+msgstr "Custom RPC"
+
+#: components/ProfileScreen/index.tsx:45
+#: components/ProfileScreen/DefaultPaymentTokenScreen/index.tsx:25
+msgid "Default payment token"
+msgstr "Default payment token"
+
+#: components/BalanceAndActions/index.tsx:28
 msgid "Deposit"
 msgstr "Deposit"
 
-#: components/TabsLayout/index.tsx:29
+#: components/ProfileScreen/index.tsx:31
+msgid "Get username"
+msgstr "Get username"
+
+#: components/TabsLayout/index.tsx:30
 msgid "Home"
 msgstr "Home"
 
-#: components/DepositFlow/DepositMethod.tsx:31
+#: components/DepositFlow/DepositMethod.tsx:30
 msgid "Noble USDC deposit"
 msgstr "Noble USDC deposit"
 
@@ -54,20 +79,37 @@ msgstr "Noble USDC deposit"
 msgid "OK"
 msgstr "OK"
 
-#: components/TabsLayout/index.tsx:31
+#: components/TabsLayout/index.tsx:32
 msgid "Portfolio"
 msgstr "Portfolio"
 
-#: components/HomeScreen/index.tsx:29
+#: components/BalanceAndActions/index.tsx:31
 msgid "Request"
 msgstr "Request"
 
-#: components/DepositFlow/DepositMethod.tsx:18
+#: components/ProfileScreen/index.tsx:53
+#: components/ProfileScreen/GrpcScreen.tsx:30
+msgid "RPC"
+msgstr "RPC"
+
+#: components/ProfileScreen/DefaultPaymentTokenScreen/index.tsx:32
+msgid "Search tokens..."
+msgstr "Search tokens..."
+
+#: components/HomeScreen/HomeScreenTransactionsList.tsx:12
+msgid "See all"
+msgstr "See all"
+
+#: components/ProfileScreen/index.tsx:63
+msgid "Seed phrase"
+msgstr "Seed phrase"
+
+#: components/DepositFlow/DepositMethod.tsx:17
 msgid "Select deposit method"
 msgstr "Select deposit method"
 
 #: components/DepositFlow/Help.tsx:13
-#: components/DepositFlow/DepositMethod.tsx:24
+#: components/DepositFlow/DepositMethod.tsx:23
 #: components/DepositFlow/Address.tsx:40
 msgid "Shielded IBC deposit"
 msgstr "Shielded IBC deposit"
@@ -76,9 +118,13 @@ msgstr "Shielded IBC deposit"
 msgid "This address rotates for each deposit to ensure privacy in Penumbra's shielded pool."
 msgstr "This address rotates for each deposit to ensure privacy in Penumbra's shielded pool."
 
-#: components/TabsLayout/index.tsx:30
+#: components/TabsLayout/index.tsx:31
 msgid "Trade"
 msgstr "Trade"
+
+#: components/TransactionList/index.tsx:22
+msgid "Transactions"
+msgstr "Transactions"
 
 #: components/TradeScreen/index.tsx:19
 msgid "Turn on push notifications so you don't miss out when trading becomes available!"

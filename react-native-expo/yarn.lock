@@ -1904,6 +1904,11 @@
   dependencies:
     semver "^7.3.5"
 
+"@penumbra-labs/registry@^12.0.0":
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/@penumbra-labs/registry/-/registry-12.0.0.tgz#824c0b9c167495b0404562e9f1eb9656a15a8e8d"
+  integrity sha512-fQ4onHovusiOZL2nhoCoEo+/sQovK9NAQmNvehIw7Q0dhw9InXIZBTUSOKujhvyrcca+vA9FsaHWr0DSv/pDsw==
+
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
@@ -5632,6 +5637,11 @@ expo-router@~4.0.9:
     semver "~7.6.3"
     server-only "^0.0.1"
 
+expo-secure-store@~14.0.0:
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-14.0.0.tgz#cf6eb7f73e619f8907d5a073e2f438927b5fc2ab"
+  integrity sha512-VyhtRFXP+7hQmHhKlHIOWid1Q/IRpM7Uif32tZHLZHvQ6FNz2cUkr26XWGvCa7btYbrR6OL++FBFZYjbIcRZTw==
+
 expo-splash-screen@~0.29.13:
   version "0.29.16"
   resolved "https://registry.yarnpkg.com/expo-splash-screen/-/expo-splash-screen-0.29.16.tgz#80b49af2605213e661a40022d724caa1ea48ccb3"
@@ -9256,6 +9266,16 @@ redent@^3.0.0:
   dependencies:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
+
+redux-persist-expo-securestore@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/redux-persist-expo-securestore/-/redux-persist-expo-securestore-2.0.0.tgz#990d8c007c39a9a624b6311d09952b6b221a548e"
+  integrity sha512-swD6sC6QCCHyKBV0hFQIBEiO8ph2Nc6Bs96hZ7Qq5iciO/Mk2T6ZDRR8e23jWDjGK5I8uCr4in7ZVb+RPbENQA==
+
+redux-persist@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-6.0.0.tgz#b4d2972f9859597c130d40d4b146fecdab51b3a8"
+  integrity sha512-71LLMbUq2r02ng2We9S215LtPu3fY0KgaGE0k8WRgl6RkqxtGfl7HUozz1Dftwsb0D/5mZ8dwAaPbtnzfvbEwQ==
 
 redux-thunk@^3.1.0:
   version "3.1.0"

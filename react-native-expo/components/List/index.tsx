@@ -1,5 +1,6 @@
 import { Sx, Text, View } from 'dripsy';
 import { ReactNode } from 'react';
+import Box from '../Box';
 
 export interface ListProps {
   /**
@@ -19,25 +20,23 @@ export interface ListProps {
  */
 export default function List({ children, title, primaryAction }: ListProps) {
   return (
-    <View sx={sx.root}>
-      {!!title && (
-        <View sx={sx.title}>
-          <Text variant='large'>{title}</Text>
+    <Box>
+      <View sx={sx.root}>
+        {!!title && (
+          <View sx={sx.title}>
+            <Text variant='large'>{title}</Text>
 
-          {primaryAction}
-        </View>
-      )}
-      {children}
-    </View>
+            {primaryAction}
+          </View>
+        )}
+        {children}
+      </View>
+    </Box>
   );
 }
 
 const sx = {
   root: {
-    backgroundColor: 'neutralContrast',
-
-    borderRadius: 'lg',
-
     flexDirection: 'column',
   },
 
