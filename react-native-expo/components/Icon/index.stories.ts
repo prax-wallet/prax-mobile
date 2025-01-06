@@ -1,5 +1,5 @@
 import { CheckCircle, Home, Coins } from 'lucide-react-native';
-import { Meta, StoryObj } from '@storybook/react/*';
+import { Meta, StoryObj } from '@storybook/react';
 import Icon from '.';
 import dripsyTheme from '@/utils/dripsyTheme';
 

@@ -6,20 +6,63 @@ on:
   pull_request:
 
 jobs:
-  build:
+  CI:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: 22.x
+    defaults:
+      run:
+        working-directory: ./react-native-expo
+
+    env:
+      # Enable colors
+      TERM: xterm-color
+      # Make the color readable
+      RED: '\033[0;31m'
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: yarn install
-      - run: yarn lint
-      - run: yarn test:ci
+          node-version: 22.x
+          cache: 'yarn'
+          cache-dependency-path: 'react-native-expo/yarn.lock'
+
+      - name: Restore cached node_modules
+        id: restore-node-modules-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ./react-native-expo/node_modules
+          key: cache-node-modules-${{ hashFiles('react-native-expo/yarn.lock') }}
+
+      - name: Install Yarn dependencies
+        run: yarn install
+        if: steps.restore-node-modules-cache.outputs.cache-hit != 'true'
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        if: steps.restore-node-modules-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v4
+        with:
+          path: ./react-native-expo/node_modules
+          key: cache-node-modules-${{ hashFiles('react-native-expo/yarn.lock') }}
+
+      - name: Ensure all translations are extracted and compiled
+        # Thanks to https://stackoverflow.com/a/3878934/974981
+        run: |
+          yarn extract && \
+          yarn compile && \
+          git add . \
+          && git diff --quiet \
+          && git diff --cached --quiet || \
+          (\
+            echo -e "${RED}Running \`yarn extract && yarn compile\` resulted in a dirty Git working tree. To fix this, run \`yarn extract && yarn compile\` locally, commit the results, and then push back up." && \
+            exit 1\
+          )
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test:ci
