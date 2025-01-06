@@ -19,18 +19,18 @@ const ALL_METADATAS = new ChainRegistryClient().bundled.get(PENUMBRA_CHAIN_ID).g
 export default function useFilteredAssets() {
   const searchText = useAppSelector(state => state.defaultPaymentTokenScreen.searchText);
 
-  const filteredAssets = useMemo(
-    () =>
-      ALL_METADATAS.filter(metadata => {
-        const searchTextLowerCase = searchText.toLocaleLowerCase();
+  const filteredAssets = useMemo(() => {
+    if (!searchText.trim().length) return ALL_METADATAS;
 
-        if (metadata.name.toLocaleLowerCase().includes(searchTextLowerCase)) return true;
-        if (metadata.symbol.toLocaleLowerCase().includes(searchTextLowerCase)) return true;
+    return ALL_METADATAS.filter(metadata => {
+      const searchTextLowerCase = searchText.toLocaleLowerCase();
 
-        return false;
-      }),
-    [searchText],
-  );
+      if (metadata.name.toLocaleLowerCase().includes(searchTextLowerCase)) return true;
+      if (metadata.symbol.toLocaleLowerCase().includes(searchTextLowerCase)) return true;
+
+      return false;
+    });
+  }, [searchText]);
 
   return filteredAssets;
 }

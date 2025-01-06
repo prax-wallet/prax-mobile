@@ -5,6 +5,23 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setSelectedAssetSymbol } from '@/store/portfolioScreen';
 import { Sx, Text, View } from 'dripsy';
 import useTransactionsForAsset from './useTransactionsForAsset';
+import { getBalanceView } from '@penumbra-zone/getters/balances-response';
+import { getSymbolFromValueView } from '@penumbra-zone/getters/value-view';
+import { BalancesResponse } from '@penumbra-zone/protobuf/penumbra/view/v1/view_pb';
+import { createSelector } from 'reselect';
+import { RootState } from '@/store';
+import { getFormattedAmtFromValueView } from '@penumbra-zone/types/value-view';
+
+const balanceSelector = (selectedAssetSymbol?: string) =>
+  createSelector(
+    [(state: RootState) => state.balances.balancesResponses, () => selectedAssetSymbol],
+    balancesResponses =>
+      balancesResponses.find(
+        balancesResponse =>
+          getBalanceView.pipe(getSymbolFromValueView)(new BalancesResponse(balancesResponse)) ===
+          selectedAssetSymbol,
+      ),
+  );
 
 /**
  * An action sheet for a given asset, with a list of relevant transactions and
@@ -12,8 +29,9 @@ import useTransactionsForAsset from './useTransactionsForAsset';
  */
 export default function AssetActionSheet() {
   const selectedAssetSymbol = useAppSelector(state => state.portfolioScreen.selectedAssetSymbol);
-  const balance = useAppSelector(state =>
-    state.balances.balances.find(balance => balance.assetSymbol === selectedAssetSymbol),
+  const balancesResponse = useAppSelector(balanceSelector(selectedAssetSymbol));
+  const balanceView = getBalanceView.optional(
+    balancesResponse ? new BalancesResponse(balancesResponse) : undefined,
   );
   const dispatch = useAppDispatch();
   const transactions = useTransactionsForAsset(selectedAssetSymbol);
@@ -28,11 +46,12 @@ export default function AssetActionSheet() {
           <AssetIcon />
         </View>
 
-        <Text sx={sx.balance}>
-          {balance?.amount} {balance?.assetSymbol}
-        </Text>
-
-        <Text sx={sx.equivalentValue}>{balance?.equivalentValue} USDC</Text>
+        {balanceView && (
+          <Text sx={sx.balance}>
+            {getFormattedAmtFromValueView(balanceView)}
+            {selectedAssetSymbol}
+          </Text>
+        )}
       </View>
 
       <TransactionList transactions={transactions} showTitle />
