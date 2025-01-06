@@ -8,6 +8,8 @@ export interface ListItemsProps {
 /**
  * Simple wrapper to use around multiple `<ListItem />`s to give them consistent
  * spacing throughout the app.
+ *
+ * For a styled list including a header and colored background, use `<List />`.
  */
 export default function ListItems({ children }: ListItemsProps) {
   return <View sx={sx.root}>{children}</View>;

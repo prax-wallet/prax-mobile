@@ -40,12 +40,16 @@ export default function ListItem({
       {avatar}
 
       <View sx={sx.textWrapper}>
-        <Text>{primaryText}</Text>
+        <Text numberOfLines={1}>{primaryText}</Text>
 
-        {!!secondaryText && <Text sx={sx.secondary}>{secondaryText}</Text>}
+        {!!secondaryText && (
+          <Text sx={sx.secondaryText} numberOfLines={1}>
+            {secondaryText}
+          </Text>
+        )}
       </View>
 
-      {suffix}
+      {!!suffix && <View sx={sx.suffixWrapper}>{suffix}</View>}
     </ConditionalWrap>
   );
 }
@@ -62,9 +66,13 @@ const sx = {
     p: '$4',
   },
 
-  secondary: {
+  secondaryText: {
     variant: 'text.small',
     color: 'neutralLight',
+  },
+
+  suffixWrapper: {
+    flexShrink: 0,
   },
 
   textWrapper: {
@@ -73,5 +81,6 @@ const sx = {
     justifyContent: 'center',
     gap: 0.5,
     flexGrow: 1,
+    flexShrink: 1,
   },
 } satisfies Record<string, Sx>;

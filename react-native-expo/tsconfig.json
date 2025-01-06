@@ -10,6 +10,7 @@
     }
   },
   "include": [
+    "./jest-setup.ts",
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",

@@ -3,7 +3,7 @@ import { useSx } from 'dripsy';
 import { LucideIcon } from 'lucide-react-native';
 import { ComponentProps, FC } from 'react';
 
-export type IconSize = 'sm' | 'md' | 'lg';
+export type IconSize = 'xs' | 'sm' | 'md' | 'lg';
 
 export interface IconProps {
   /**
@@ -16,6 +16,7 @@ export interface IconProps {
    */
   IconComponent: LucideIcon | FC;
   /**
+   * - `xs`: 10px square
    * - `sm`: 16px square
    * - `md`: 24px square
    * - `lg`: 32px square
@@ -28,6 +29,10 @@ export interface IconProps {
 }
 
 const PROPS_BY_SIZE: Record<IconSize, ComponentProps<LucideIcon>> = {
+  xs: {
+    size: 10,
+    strokeWidth: 1,
+  },
   sm: {
     size: 16,
     strokeWidth: 1,
