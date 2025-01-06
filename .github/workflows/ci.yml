@@ -6,11 +6,18 @@ on:
   pull_request:
 
 jobs:
-  build:
+  CI:
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: ./react-native-expo
+
+    env:
+      # Enable colors
+      TERM: xterm-color
+      # Make the color readable
+      RED: '\033[0;31m'
 
     steps:
       - uses: actions/checkout@v4
@@ -50,7 +57,7 @@ jobs:
           && git diff --quiet \
           && git diff --cached --quiet || \
           (\
-            echo "\033[0;31mRunning \`yarn extract && yarn compile\` resulted in a dirty Git working tree. To fix this, run \`yarn extract && yarn compile\` locally, commit the results, and then push back up." && \
+            echo -e "${RED}Running \`yarn extract && yarn compile\` resulted in a dirty Git working tree. To fix this, run \`yarn extract && yarn compile\` locally, commit the results, and then push back up." && \
             exit 1\
           )
 
