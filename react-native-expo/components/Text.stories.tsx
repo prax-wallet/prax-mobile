@@ -3,7 +3,7 @@
  * Its component is the built-in `<Text />` component from Dripsy, so there is
  * no component file separate from this story file.
  */
-import { Meta, StoryObj } from '@storybook/react/*';
+import { Meta, StoryObj } from '@storybook/react';
 import dripsyTheme from '@/utils/dripsyTheme';
 import { Text } from 'dripsy';
 

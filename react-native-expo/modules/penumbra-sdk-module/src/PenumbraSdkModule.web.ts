@@ -1,3 +1,2 @@
 // Fake module for web
-export default {
-};
+export default {};

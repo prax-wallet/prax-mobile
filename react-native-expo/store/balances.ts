@@ -17,6 +17,4 @@ export const balancesSlice = createSlice({
   reducers: {},
 });
 
-export const {} = balancesSlice.actions;
-
 export default balancesSlice.reducer;
