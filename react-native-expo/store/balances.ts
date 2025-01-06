@@ -1,14 +1,19 @@
-import balanceFactory from '@/factories/balance';
-import Balance from '@/types/Balance';
+import { BalancesResponse } from '@penumbra-zone/protobuf/penumbra/view/v1/view_pb';
+import balancesResponseFactory from '@/factories/balancesResponse';
 import { createSlice } from '@reduxjs/toolkit';
+import { PlainMessage } from '@bufbuild/protobuf';
+import { ChainRegistryClient } from '@penumbra-labs/registry';
+import { PENUMBRA_CHAIN_ID } from '@/utils/constants';
+
+const METADATAS = new ChainRegistryClient().bundled.get(PENUMBRA_CHAIN_ID).getAllAssets();
 
 export interface BalancesState {
-  balances: Balance[];
+  balancesResponses: PlainMessage<BalancesResponse>[];
 }
 
 const initialState: BalancesState = {
   /** @todo: Populate with real data */
-  balances: balanceFactory.buildList(5),
+  balancesResponses: balancesResponseFactory.buildList(METADATAS.length),
 };
 
 export const balancesSlice = createSlice({
@@ -16,7 +21,5 @@ export const balancesSlice = createSlice({
   initialState,
   reducers: {},
 });
-
-export const {} = balancesSlice.actions;
 
 export default balancesSlice.reducer;

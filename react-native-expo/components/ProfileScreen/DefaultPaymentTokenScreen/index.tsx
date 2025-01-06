@@ -7,7 +7,7 @@ import { setSearchText } from '@/store/defaultPaymentTokenScreen';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setDefaultPaymentToken } from '@/store/secureStore';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Sx, Text, View } from 'dripsy';
+import { ScrollView, Sx, Text } from 'dripsy';
 import { Check, Search } from 'lucide-react-native';
 import useFilteredAssets from './useFilteredAssets';
 import TextInputIconStartAdornment from '@/components/TextInputIconStartAdornment';
@@ -20,7 +20,7 @@ export default function DefaultPaymentTokenScreen() {
   const { t } = useLingui();
 
   return (
-    <View sx={sx.root}>
+    <ScrollView contentContainerSx={sx.root}>
       <Text variant='h4'>
         <Trans>Default payment token</Trans>
       </Text>
@@ -49,7 +49,7 @@ export default function DefaultPaymentTokenScreen() {
           />
         ))}
       </List>
-    </View>
+    </ScrollView>
   );
 }
 

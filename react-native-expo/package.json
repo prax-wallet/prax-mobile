@@ -2,6 +2,7 @@
   "name": "react-native-expo",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -25,10 +26,15 @@
     ]
   },
   "dependencies": {
+    "@bufbuild/protobuf": "^1.10.0",
     "@expo/vector-icons": "^14.0.2",
     "@lingui/core": "^5.1.2",
     "@lingui/react": "^5.1.2",
     "@penumbra-labs/registry": "^12.0.0",
+    "@penumbra-zone/bech32m": "^11.0.0",
+    "@penumbra-zone/getters": "^21.0.0",
+    "@penumbra-zone/protobuf": "^7.0.0",
+    "@penumbra-zone/types": "^27.1.0",
     "@react-navigation/bottom-tabs": "^7.0.0",
     "@react-navigation/native": "^7.0.0",
     "@reduxjs/toolkit": "^2.5.0",
@@ -61,7 +67,8 @@
     "react-native-webview": "13.12.2",
     "react-redux": "^9.2.0",
     "redux-persist": "^6.0.0",
-    "redux-persist-expo-securestore": "^2.0.0"
+    "redux-persist-expo-securestore": "^2.0.0",
+    "reselect": "^5.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

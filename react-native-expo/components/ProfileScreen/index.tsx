@@ -1,4 +1,4 @@
-import penumbraAddressFactory from '@/factories/penumbraAddress';
+import addressFactory from '@/factories/address';
 import Avatar from '../Avatar';
 import { Sx, Text, View } from 'dripsy';
 import Button from '../Button';
@@ -9,6 +9,9 @@ import AssetIcon from '../AssetIcon';
 import ListItemChevronRightSuffix from '../ListItemChevronRightSuffix';
 import { useRouter } from 'expo-router';
 import { useAppSelector } from '@/store/hooks';
+import { bech32mAddress } from '@penumbra-zone/bech32m/penumbra';
+
+const mockAddress = bech32mAddress(addressFactory.build());
 
 export default function ProfileScreen() {
   const { t } = useLingui();
@@ -22,7 +25,7 @@ export default function ProfileScreen() {
         <Avatar size='lg' />
 
         <Text sx={sx.address} ellipsizeMode='middle' numberOfLines={1}>
-          {penumbraAddressFactory.build().value}
+          {mockAddress}
         </Text>
 
         <View sx={sx.buttons}>

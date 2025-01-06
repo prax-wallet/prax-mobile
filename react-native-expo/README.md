@@ -192,3 +192,9 @@ Note that we use secure storage regardless of the sensitivity of the data. So, b
 If you're developing a screen that sets data in secure storage but also sets temporary state data that shouldn't be persisted, the pattern we use is to create a separate slice for that screen that only contains the temporary data. For example, `<DefaultPaymentTokenScreen />` uses the `defaultPaymentTokenScreen` slice to maintain its screen state (such as, for example, the contents of the text field on the screen) and the `secureStore` slice to store the user's preferred payment token.
 
 The slice can be consumed and updated just like any other slice (via `useAppSelector()` and `useAppDispatch()`), and can have its shape modified just like any other slice (in `store/secureStore.ts`). The persistence is accomplished via [`redux-persist`](https://github.com/rt2zz/redux-persist) and [redux-persist-expo-securestore](https://github.com/Cretezy/redux-persist-expo-securestore), using [Expo SecureStore](https://docs.expo.dev/versions/latest/sdk/securestore/) under the hood. See `store/index.ts` to see how it's configured.
+
+## Weird issues/gotchas
+
+### Importing `@penumbra-zone/*` packages
+
+For some reason, although TypeScript and Storybook understand imports from `@penumbra-zone/...`, Expo often does not, and expects the import to come from e.g., inside `dist/`. This should be fixed; but in the meantime, `metro.config.cjs` temporarily patches these imports using an alias.
