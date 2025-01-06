@@ -41,6 +41,11 @@ jobs:
           path: ./react-native-expo/node_modules
           key: cache-node-modules-${{ hashFiles('react-native-expo/yarn.lock') }}
 
-      - run: yarn lint
+      - name: Ensure all translations are extracted and compiled
+        run: yarn extract && yarn compile && git diff --exit-code
 
-      - run: yarn test:ci
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test:ci
