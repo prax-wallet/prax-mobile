@@ -132,6 +132,36 @@ In short: all UI lives under the `components` directory. All route components li
   - There MUST NOT be more than one component _exported_ from the file. (If other components in the file need to be exported, move them into separate files.)
   - The file MUST be named for the component which is exported, or be named `index.tsx` when it is in its own directory.
 
+## Theme/design system
+
+We use [Dripsy](https://www.dripsy.xyz/) to provide theme values to our components. We have a Dripsy provider component at the top of our component tree, and then we used Dripsy's wrapper components instead of React Native's primitives. For example, instead of importing `View` from `react-native`, we import it from `dripsy`. That way, it comes with theme-specific values built-in, complete with TypeScript-powered intellisense.
+
+To take advantage of those values, use the `sx` prop on Dripsy's components:
+
+```tsx
+import { Sx, View } from 'dripsy';
+
+function MyComponent() {
+  return (
+    <View sx={sx.root}>
+      {/** `detailTechnical` is one of our theme-defined text variants */}
+      <Text variant='detailTechnical'>
+        Hello, world!
+      </Text>
+    </View>
+  );
+}
+
+const sx = {
+  root: {
+    // Note the use of a color name from our theme.
+    backgroundColor: 'neutralMain',
+  }
+} satisifes Record<string, Sx>;
+```
+
+Read more in the [Dripsy docs](https://www.dripsy.xyz/usage/overview).
+
 ## Naming conventions
 
 ### Components
