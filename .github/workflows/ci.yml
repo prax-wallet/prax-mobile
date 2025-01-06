@@ -22,7 +22,7 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: 'react-native-expo/yarn.lock'
 
-      - name: Restore cached Primes
+      - name: Restore cached node_modules
         id: restore-node-modules-cache
         uses: actions/cache/restore@v4
         with:
